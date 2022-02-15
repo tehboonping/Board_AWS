@@ -1,0 +1,22 @@
+CREATE DATABASE IF NOT EXISTS boarddata;
+USE boarddata;
+
+CREATE TABLE IF NOT EXISTS datas
+(
+  id int(10) AUTO_INCREMENT NOT NULL,
+  name VARCHAR(20),
+  message TEXT,
+  posttime DATETIME,
+  PRIMARY KEY(id)
+)DEFAULT CHARACTER
+  SET=utf8;
+
+CREATE TABLE IF NOT EXISTS datas
+(
+  id int(10) AUTO_INCREMENT NOT NULL,
+  user VARCHAR(30),
+  pass VARCHAR(50),
+  username VARCHAR(20),
+  PRIMARY KEY(id)
+)DEFAULT CHARACTER
+  SET=utf8;
