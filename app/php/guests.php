@@ -18,7 +18,7 @@ $posttime = date("Y-m-d H:i:s");
 
 if(!empty($name) && !empty($comment))
 {
-	$data = $mysqli->query("INSERT INTO datas(name,message,posttime) VALUES('$name','$comment','$posttime')");
+	$data = $mysqli->query("INSERT INTO datas(name,message,posttime) VALUES('(G)$name','$comment','$posttime')");
 }
 
 $data = $mysqli->query("SELECT * FROM datas order by posttime desc");
@@ -30,7 +30,7 @@ if(!$data)
 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-	header('Location:http://172.16.2.24:8080/php/guests.php');
+	header('Location:http://172.16.1.245:8080/php/guests.php');
 }
 ?>
 

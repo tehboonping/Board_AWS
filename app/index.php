@@ -31,8 +31,9 @@ if($userid AND $pass)
 	if(password_verify($pass, $hash))
 	{
 		$_SESSION['username'] = $row['username'];
+		$_SESSION['Developer'] = $row['id'];
 
-		header('Location:http://172.16.2.24:8080/php/users.php');
+		header('Location:http://172.16.1.245:8080/php/users.php');
 		exit;
 	}
 	else

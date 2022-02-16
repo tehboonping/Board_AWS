@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$developerid = '1';
+
 $host = "mysql";
 $user = "root";
 $password = "pass";
@@ -31,7 +33,7 @@ if(!$data)
 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-	header('Location:http://172.16.2.24:8080/php/users.php');
+	header('Location:http://172.16.1.245:8080/php/users.php');
 }
 ?>
 
@@ -63,6 +65,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<p class="commentname">名前 : <?php echo $row['name']?></p>
 					<p class="commenttime">時刻 : <?php echo $row['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $row['message']?></p>
+					<?php if($_SESSION['Developer'] === $developerid OR $_SESSION['username'] === $row['name']) {?>
 					<div class="display">
 					<form action="editing.php" method="get" class="from">
 						<input type="hidden" name="editid" value="<?php echo $row['id']?>">
@@ -72,7 +75,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 						<input type="hidden" name="deleteid" value="<?php echo $row['id']?>">
 						<button type="submit" class="button1">削除</button>
 					</form>
-				</div>
+					</div>
+					<?php }?>
 				</div>
 			<?php endforeach;?>
 	</section>

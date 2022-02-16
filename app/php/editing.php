@@ -1,4 +1,7 @@
 <?php
+session_start();
+
+$developerid = '1';
 
 $host = "mysql";
 $user = "root";
@@ -38,10 +41,14 @@ if(!$data)
     <form action="edit.php" method="get">
     	<h3>名前</h3>
     	<?php foreach($data as $row):?>
-    	<input type="hidden" name="getid" value="<?php echo $id?>">
-    	<input name="name" class="namebox" value="<?php echo $row['name']?>">
+    		<input type="hidden" name="getid" value="<?php echo $id?>">
+    		<?php if($_SESSION['Developer'] === $developerid) {?>
+    			<input name="name" class="namebox" value="<?php echo $row['name']?>">
+    		<?php } else {?>
+    			<input name="name" class="namebox" value="<?php echo $row['name']?>" readonly>
+    		<?php }?>
     	<h3>内容</h3>
-    	<textarea name="message" class="textbox"><?php echo $row['message']?></textarea><br>
+    		<textarea name="message" class="textbox"><?php echo $row['message']?></textarea><br>
 		<?php endforeach;?>
     	<button type="submit">編集</button>
 	</form>
