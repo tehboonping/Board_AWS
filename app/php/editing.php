@@ -32,10 +32,10 @@ if(!$data)
 <meta charset="UTF-8">
 <head>
 	<meta charset="UTF-8">
-	<title>掲示板</title>
+	<title>掲示板編集</title>
 	<link href="style.css" rel="stylesheet">
 </head>
-<h1>掲示板</h1>
+<h1 class="title">掲示板</h1>
 <section>
     <h2>投稿の編集</h2>
     <form action="edit.php" method="get">
@@ -50,8 +50,8 @@ if(!$data)
     	<h3>内容</h3>
     		<textarea name="message" class="textbox"><?php echo $row['message']?></textarea><br>
 		<?php endforeach;?>
-    	<button type="submit">編集</button>
+    	<button class="button1" type="submit">編集</button>
 	</form>
-
-	<button class="buttons" onclick="location.href='users.php'">キャンセル</button>
+	<br>
+	<button class="button1" onclick="location.href='users.php'">キャンセル</button>
 </section>

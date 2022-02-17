@@ -44,17 +44,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 <body>
 	<button onclick="location.href='../index.php'" class="return">←ログイン画面に戻る</button>
 	<center>
-	<h1>掲示板(ゲスト)</h1>
+	<h1 class="title">掲示板(ゲスト)</h1>
 	<section>
 		<h2>投稿</h2>
 		<form action="guests.php" method="post">
 			名前：<input type="text" name="name" class="namebox" id="names" required><br>
-			投稿内容：<button type="submit" id="send">投稿</button><br>
+			投稿内容：<button type="submit" id="send" class="button1">投稿</button><br>
 			<textarea type="text" name="comment" class="textbox" id="messages" required></textarea><br>
 		</form>
 	</section>
 	</center>
-		<hr>
+		<br><hr style="height: 2px; background-color: black;">
 	<section>
 		<h2 align="center">投稿内容一覧</h2>
 			<?php foreach($data as $row):?>

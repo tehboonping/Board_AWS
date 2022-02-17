@@ -12,8 +12,9 @@ if($mysqli->connect_errno)
 	echo "DB接続失敗". $mysqli->connect_error;
 }			
 
-$userid = $_GET['userid'];
-$pass = $_GET['password'];
+$userid = $_POST['userid'];
+$pass = $_POST['password'];
+$security = $userid.$pass;
 
 $data = $mysqli->query("SELECT * FROM systems WHERE user = '$userid'");
 
@@ -26,12 +27,11 @@ if($userid AND $pass)
 {
 	$row = mysqli_fetch_array($data, MYSQLI_ASSOC);
 
-	$hash = password_hash($row['pass'], PASSWORD_DEFAULT);
-
-	if(password_verify($pass, $hash))
+	if(password_verify($security, $row['pass']))
 	{
+		$_SESSION['accountid'] = $row['accountid'];
 		$_SESSION['username'] = $row['username'];
-		$_SESSION['Developer'] = $row['id'];
+		$_SESSION['Developer'] = $row['lv'];
 
 		header('Location:http://172.16.1.245:8080/php/users.php');
 		exit;
@@ -53,21 +53,21 @@ if($userid AND $pass)
 </head>
 <body>
 	<center>
-	<h1>掲示板ログイン</h1>
+	<h1 class="title">掲示板ログイン</h1>
 	<br>
-	<form action="index.php" method="get">
+	<form action="index.php" method="post">
 		<h2>ユーザーID</h2>
-		<input name="userid" class="userids" required>
+		<input name="userid" class="userids" value="<?php echo $userid; ?>" required>
 
 		<h2>パスワード</h2>
-		<input name="password" type="password" class="passwords" required><br><br>
+		<input name="password" type="password" value="<?php echo $pass;?>" class="passwords" required><br><br>
 
-		<button type="submit">ログイン</button><br>
-		<p><?php echo $msg; ?></p>
+		<button class="button1" type="submit">ログイン</button><br>
+		<p style="color: red"><?php echo $msg; ?></p>
 	</form>
-	<hr>
-	<button onclick="location.href='php/signup.php'">アカウント申請</button>
-	<button onclick="location.href='php/guests.php'">ゲストとして使用</button>
+	<br><hr style="height: 2px; background-color: black;"><br>
+	<button class="button1" onclick="location.href='php/signup.php'">アカウント申請</button>
+	<button class="button1" onclick="location.href='php/guests.php'">ゲストとして使用</button>
 </body>
 </html>
 

@@ -25,12 +25,15 @@ $data->execute();
 ?>
 
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<title>掲示板</title>
+<head>
+	<meta charset="UTF-8">
+	<title>掲示板削除</title>
+	<link href="style.css" rel="stylesheet">
+</head>
 <center>
-<h1>掲示板</h1>
+<h1 class="title">掲示板</h1>
 <section>
     <h2>削除完了</h2>
-    <button onclick="location.href='users.php'">戻る</button>
+    <button class="button1" onclick="location.href='users.php'">戻る</button>
 </section>
 </center>

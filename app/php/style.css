@@ -1,10 +1,23 @@
+body
+{
+	background-image: url("../background.jpg");
+	background-repeat: no-repeat;
+	 background-size: cover;
+}
+
+.title
+{
+	text-shadow: 2px 2px 2px silver;
+}
 .userids
 {
+	border-radius: 0.5em;
 	width: 250px;
 	height: 20px;
 }
 .passwords
 {
+	border-radius: 0.5em;
 	width: 250px;
 	height: 20px;
 }
@@ -13,6 +26,8 @@
 	position: relative;
 	left: 1px;
 	top: 1px;
+	border-radius: 0.5em;
+	cursor: pointer;
 }
 
 .namebox
@@ -61,7 +76,8 @@
 }
 .button1
 {	
-	border-radius: 1em;
+	border-radius: 0.5em;
+	cursor: pointer;
 }
 .display
 {
