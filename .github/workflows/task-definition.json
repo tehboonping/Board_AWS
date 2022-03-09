@@ -1,0 +1,231 @@
+{
+  "ipcMode": null,
+  "executionRoleArn": "arn:aws:iam::760055059860:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "dnsSearchDomains": null,
+      "environmentFiles": null,
+      "logConfiguration": null,
+      "entryPoint": null,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "command": null,
+      "linuxParameters": null,
+      "cpu": 0,
+      "environment": [
+        {
+          "name": "BOARD_DB_HOST",
+          "value": "boarddata.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com"
+        },
+        {
+          "name": "BOARD_DB_NAME",
+          "value": "boarddata"
+        },
+        {
+          "name": "BOARD_DB_PASSWORD",
+          "value": "password"
+        },
+        {
+          "name": "BOARD_DB_USER",
+          "value": "root"
+        },
+        {
+          "name": "BOARD_REDIS_HOST",
+          "value": "boardredis.67kw0i.clustercfg.apne1.cache.amazonaws.com"
+        },
+        {
+          "name": "BOARD_REDIS_PORT",
+          "value": "6379"
+        }
+      ],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": [
+        {
+          "readOnly": null,
+          "containerPath": "/var/www/html/",
+          "sourceVolume": "webvolume"
+        },
+        {
+          "readOnly": null,
+          "containerPath": "/var/www/html/images/",
+          "sourceVolume": "imagesvolume"
+        }
+      ],
+      "workingDirectory": null,
+      "secrets": null,
+      "dockerSecurityOptions": null,
+      "memory": null,
+      "memoryReservation": 300,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "760055059860.dkr.ecr.ap-northeast-1.amazonaws.com/board",
+      "startTimeout": null,
+      "firelensConfiguration": null,
+      "dependsOn": null,
+      "disableNetworking": false,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": true,
+      "links": null,
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "board_web"
+    },
+    {
+      "dnsSearchDomains": null,
+      "environmentFiles": null,
+      "logConfiguration": null,
+      "entryPoint": null,
+      "portMappings": [
+        {
+          "hostPort": 85,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "command": null,
+      "linuxParameters": null,
+      "cpu": 0,
+      "environment": [
+        {
+          "name": "BOARD_DB_HOST",
+          "value": "boarddata.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com"
+        },
+        {
+          "name": "BOARD_DB_NAME",
+          "value": "boarddata"
+        },
+        {
+          "name": "BOARD_DB_PASSWORD",
+          "value": "password"
+        },
+        {
+          "name": "BOARD_DB_USER",
+          "value": "root"
+        }
+      ],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": [
+        {
+          "readOnly": null,
+          "containerPath": "/var/www/html/",
+          "sourceVolume": "managervolume"
+        },
+        {
+          "readOnly": null,
+          "containerPath": "/var/www/html/images/",
+          "sourceVolume": "imagesvolume"
+        }
+      ],
+      "workingDirectory": null,
+      "secrets": null,
+      "dockerSecurityOptions": null,
+      "memory": null,
+      "memoryReservation": 300,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "760055059860.dkr.ecr.ap-northeast-1.amazonaws.com/manager",
+      "startTimeout": null,
+      "firelensConfiguration": null,
+      "dependsOn": null,
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": true,
+      "links": null,
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "board_manager"
+    }
+  ],
+  "placementConstraints": [],
+  "memory": null,
+  "taskRoleArn": null,
+  "compatibilities": [
+    "EXTERNAL",
+    "EC2"
+  ],
+  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:760055059860:task-definition/boardtask:9",
+  "family": "boardtask",
+  "requiresAttributes": [
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.execution-role-ecr-pull"
+    }
+  ],
+  "pidMode": null,
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "networkMode": null,
+  "runtimePlatform": null,
+  "cpu": null,
+  "revision": 9,
+  "status": "ACTIVE",
+  "inferenceAccelerators": null,
+  "proxyConfiguration": null,
+  "volumes": [
+    {
+      "fsxWindowsFileServerVolumeConfiguration": null,
+      "efsVolumeConfiguration": null,
+      "name": "webvolume",
+      "host": {
+        "sourcePath": "/Users/Digitalworks/app/web/"
+      },
+      "dockerVolumeConfiguration": null
+    },
+    {
+      "fsxWindowsFileServerVolumeConfiguration": null,
+      "efsVolumeConfiguration": null,
+      "name": "managervolume",
+      "host": {
+        "sourcePath": "/Users/Digitalworks/app/manager/"
+      },
+      "dockerVolumeConfiguration": null
+    },
+    {
+      "fsxWindowsFileServerVolumeConfiguration": null,
+      "efsVolumeConfiguration": null,
+      "name": "imagesvolume",
+      "host": {
+        "sourcePath": "/Users/Digitalworks/app/images/"
+      },
+      "dockerVolumeConfiguration": null
+    }
+  ]
+}
