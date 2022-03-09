@@ -61,10 +61,10 @@ if(!empty($comment))
 	}
 }
 
-$redis = new Redis();
-$redis->connect('boardredis.67kw0i.clustercfg.apne1.cache.amazonaws.com',6379);
+$redis = new RedisCluster();
+$redis->connect(array('host'=>'boardredis.67kw0i.clustercfg.apne1.cache.amazonaws.com','port'=>6379));
 $datacount = 0;
-$cacheIsExist = NULL;
+$cacheIsExist = false;
 
 $count = $mysqli->query("SELECT COUNT(id) FROM datas");
 $rows = mysqli_fetch_array($count, MYSQLI_NUM);
@@ -103,7 +103,7 @@ if(empty($redisdata) || $redis->dbsize() !== $rows[0])
 		$datacount++;
 		$redis->hMSet('datas'.$datacount, $cache);
 	}
-	$cacheIsExist = true;
+	$cacheIsExist = false;
 }
 else
 {
