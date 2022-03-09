@@ -61,8 +61,7 @@ if(!empty($comment))
 	}
 }
 
-$redis = new RedisCluster();
-$redis->connect(array('host'=>'boardredis.67kw0i.clustercfg.apne1.cache.amazonaws.com','port'=>6379));
+$redis = new RedisCluster(NULL,['boardredis.67kw0i.clustercfg.apne1.cache.amazonaws.com:6379']);
 $datacount = 0;
 $cacheIsExist = false;
 
