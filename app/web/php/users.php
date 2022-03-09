@@ -62,7 +62,7 @@ if(!empty($comment))
 }
 
 $redis = new Redis();
-$redis->connect('boardcache-ro.67kw0i.ng.0001.apne1.cache.amazonaws.com',6379);
+$redis->connect('boardcache-001.67kw0i.0001.apne1.cache.amazonaws.com',6379);
 
 $datacount = 0;
 $cacheIsExist = false;
