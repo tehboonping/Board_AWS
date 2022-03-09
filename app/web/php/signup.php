@@ -7,9 +7,9 @@ if($_SESSION['enable'])
 }
 
 
-$host = "mysql";
+$host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
-$password = "pass";
+$password = "password";
 $database = "boarddata";
 
 $mysqli = new mysqli($host, $user, $password, $database);
