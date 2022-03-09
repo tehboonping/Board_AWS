@@ -23,7 +23,8 @@ if(!$id)
 	echo "IDが存在しません";
 }
 
-$redis = new RedisCluster(NULL,['boardredis.67kw0i.clustercfg.apne1.cache.amazonaws.com:6379']);
+$redis = new Redis();
+$redis->connect('boardcache-ro.67kw0i.ng.0001.apne1.cache.amazonaws.com',6379);
 
 for($i = 1;$i <= $redis->dbsize(); $i++)
 {

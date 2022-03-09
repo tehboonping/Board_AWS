@@ -34,7 +34,8 @@ $message = $_POST['message'];
 $delete = $_POST['delete'];
 $image = $_FILES['image']['name'];
 
-$redis = new RedisCluster(NULL,['boardredis.67kw0i.clustercfg.apne1.cache.amazonaws.com:6379']);
+$redis = new Redis();
+$redis->connect('boardcache-ro.67kw0i.ng.0001.apne1.cache.amazonaws.com',6379);
 
 if($image)
 {
