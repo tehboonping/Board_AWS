@@ -42,7 +42,7 @@ if($image)
 	$deleteimage = $mysqli->query("SELECT * FROM datas WHERE id=$id");
 	foreach($deleteimage as $row)
 	{
-		$uploaddir = "../images/";
+		$uploaddir = "./images/";
 		$filename = $row['image'];
 		$filepath = $uploaddir.$filename;
 
@@ -52,7 +52,7 @@ if($image)
 		}
 	}
 
-	$uploaddir = "../images/";
+	$uploaddir = "./images/";
 	$filepath = $uploaddir.$image;
 
 	if(file_exists($filepath))
@@ -89,7 +89,7 @@ else if($delete)
 	$deleteimage = $mysqli->query("SELECT * FROM datas WHERE id=$id");
 	foreach($deleteimage as $row)
 	{
-		$uploaddir = "../images/";
+		$uploaddir = "./images/";
 		$filename = $row['image'];
 		$filepath = $uploaddir.$filename;
 		
