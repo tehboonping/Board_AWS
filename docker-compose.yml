@@ -2,19 +2,43 @@ version: "3.7"
 
 services:
   web:
+    container_name: board_web
     build: ./web
     ports:
       - 8080:80
     volumes:
-      - ./app/:/var/www/html/
+      - ./app/web/:/var/www/html/
+      - ./app/images/:/var/www/html/images/
     depends_on:
       - mysql
+    links:
+      - redis
 
   mysql:
-    build: ./mysql/    
+    container_name: board_mysql
+    build: ./mysql/
     volumes:
       - ./mysql/db:/var/lib/mysql
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
     image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=pass
+
+  redis:
+    container_name: board_redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis:/data
+
+  manager:
+    container_name: board_manager
+    image: board_web
+    ports:
+      - 8081:80
+    volumes:
+      - ./app/manager/:/var/www/html/
+      - ./app/images/:/var/www/html/images/
+    depends_on:
+      - mysql
