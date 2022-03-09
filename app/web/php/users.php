@@ -72,12 +72,15 @@ $rows = mysqli_fetch_array($count, MYSQLI_NUM);
 $redisdata = $redis->hGetALL('datas1');
 if(empty($redisdata) || $redis->dbsize() !== $rows[0])
 {
-	$count = 1;
-	$bool = $redis->del('datas'.$count);
-	while($bool > 0)
+	if(!empty($redisdata))
 	{
-		$count++;
+		$count = 1;
 		$bool = $redis->del('datas'.$count);
+		while($bool > 0)
+		{
+			$count++;
+			$bool = $redis->del('datas'.$count);
+		}
 	}
 
 	$data = $mysqli->query("SELECT * FROM datas order by posttime desc");
