@@ -5,9 +5,9 @@ $_SESSION['accountid'] = "";
 $_SESSION['username'] = "";
 $_SESSION['Developer'] = "";
 
-$host = "mysql";
+$host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
-$password = "pass";
+$password = "password";
 $database = "boarddata";
 
 $mysqli = new mysqli($host, $user, $password, $database);
@@ -37,7 +37,7 @@ else
 	$security = $userid.$pass;
 
 	$redis = new Redis();
-	$redis->connect('redis',6379);
+	$redis->connect('boardredis.67kw0i.clustercfg.apne1.cache.amazonaws.com',6379);
 
 	for($i = 1;$i <= $redis->dbsize();$i++)
 	{
