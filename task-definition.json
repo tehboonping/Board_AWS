@@ -12,6 +12,32 @@
             "protocol": "tcp"
           }
         ],
+        "environment": [
+         {
+           "name": "BOARD_DB_HOST",
+           "value": "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com"
+         },
+         {
+           "name": "BOARD_DB_NAME",
+           "value": "boarddata"
+         },
+         {
+           "name": "BOARD_DB_PASSWORD",
+           "value": "password"
+         },
+         {
+           "name": "BOARD_DB_USER",
+           "value": "root"
+         },
+         {
+           "name": "BOARD_REDIS_HOST",
+           "value": "boardredis.67kw0i.clustercfg.apne1.cache.amazonaws.com"
+         },
+         {
+           "name": "BOARD_REDIS_PORT",
+           "value": "6379"
+         }
+        ],
         "essential": true
       }
     ],
