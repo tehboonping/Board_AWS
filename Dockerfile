@@ -10,4 +10,4 @@ RUN pecl install redis \
 	&& docker-php-ext-enable redis
 COPY ./app/web /var/www/html/web/
 COPY ./app/manager /var/www/html/manager/
-COPY ./appimages /var/www/html/images/
+COPY ./app/images /var/www/html/images/
