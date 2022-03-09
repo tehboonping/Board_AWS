@@ -1,6 +1,6 @@
 {
   "ipcMode": null,
-  "executionRoleArn": "arn:aws:iam::760055059860:role/ecsTaskExecutionRole",
+  "executionRoleArn": null,
   "containerDefinitions": [
     {
       "dnsSearchDomains": null,
@@ -46,18 +46,7 @@
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
-      "mountPoints": [
-        {
-          "readOnly": null,
-          "containerPath": "/var/www/html/",
-          "sourceVolume": "webvolume"
-        },
-        {
-          "readOnly": null,
-          "containerPath": "/var/www/html/images/",
-          "sourceVolume": "imagesvolume"
-        }
-      ],
+      "mountPoints": [],
       "workingDirectory": null,
       "secrets": null,
       "dockerSecurityOptions": null,
@@ -120,18 +109,7 @@
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
-      "mountPoints": [
-        {
-          "readOnly": null,
-          "containerPath": "/var/www/html/",
-          "sourceVolume": "managervolume"
-        },
-        {
-          "readOnly": null,
-          "containerPath": "/var/www/html/images/",
-          "sourceVolume": "imagesvolume"
-        }
-      ],
+      "mountPoints": [],
       "workingDirectory": null,
       "secrets": null,
       "dockerSecurityOptions": null,
@@ -166,7 +144,7 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:760055059860:task-definition/boardtask:9",
+  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:760055059860:task-definition/boardtask:10",
   "family": "boardtask",
   "requiresAttributes": [
     {
@@ -180,12 +158,6 @@
       "targetType": null,
       "value": null,
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.execution-role-ecr-pull"
     }
   ],
   "pidMode": null,
@@ -195,37 +167,9 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 9,
+  "revision": 10,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
-  "volumes": [
-    {
-      "fsxWindowsFileServerVolumeConfiguration": null,
-      "efsVolumeConfiguration": null,
-      "name": "webvolume",
-      "host": {
-        "sourcePath": "/Users/Digitalworks/app/web/"
-      },
-      "dockerVolumeConfiguration": null
-    },
-    {
-      "fsxWindowsFileServerVolumeConfiguration": null,
-      "efsVolumeConfiguration": null,
-      "name": "managervolume",
-      "host": {
-        "sourcePath": "/Users/Digitalworks/app/manager/"
-      },
-      "dockerVolumeConfiguration": null
-    },
-    {
-      "fsxWindowsFileServerVolumeConfiguration": null,
-      "efsVolumeConfiguration": null,
-      "name": "imagesvolume",
-      "host": {
-        "sourcePath": "/Users/Digitalworks/app/images/"
-      },
-      "dockerVolumeConfiguration": null
-    }
-  ]
+  "volumes": []
 }
