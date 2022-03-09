@@ -33,9 +33,9 @@ on:
 
 env:
   AWS_REGION: ap-northeast-1                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: testboard           # set this to your Amazon ECR repository name
-  ECS_SERVICE: testboardservice                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: testboard                 # set this to your Amazon ECS cluster name
+  ECR_REPOSITORY: board           # set this to your Amazon ECR repository name
+  ECS_SERVICE: boardservice                 # set this to your Amazon ECS service name
+  ECS_CLUSTER: board                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: task-definition.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: board_web           # set this to the name of the container in the
@@ -65,7 +65,7 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        ECR_REGISTRY: testboard
+        ECR_REGISTRY: board
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
@@ -81,12 +81,12 @@ jobs:
       with:
         task-definition: task-definition.json
         container-name: board_web
-        image: testboard
+        image: board
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: task-definition.json
-        service: testboardservice
-        cluster: testboard
+        service: boardservice
+        cluster: board
         wait-for-service-stability: true
