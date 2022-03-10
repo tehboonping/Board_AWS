@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!$_SESSION['managerid'] || !$_SESSION['name'])
+if(!$_SESSION['name'])
 {
 	echo "アクセス拒否！IDもしくは名前が存在しません。";
 	return;
