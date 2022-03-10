@@ -6,6 +6,6 @@ RUN echo "file_uploads = On\n" \
          "max_execution_time = 600\n" \
          > /usr/local/etc/php/conf.d/uploads.ini
 RUN docker-php-ext-install mysqli
-RUN cp ./manager /var/www/manager
+RUN cp /manager /var/www/manager
 RUN chmod -R 777 /var/www/
 VOLUME ["/var/www/manager","/var/www/images"]
