@@ -12,3 +12,4 @@ COPY ./app/web /var/www/html
 VOLUME /var/www/html
 COPY ./app/images /var/www/images
 VOLUME /var/www/images
+RUN chmod 777 /var/www/images
