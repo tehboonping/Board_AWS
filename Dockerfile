@@ -1,3 +1,4 @@
+USER root
 FROM php:7.3.4-apache
 RUN echo "file_uploads = On\n" \
          "memory_limit = 500M\n" \

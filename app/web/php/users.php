@@ -27,11 +27,13 @@ $filename = $_FILES['image']['name'];
 date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
+$uploaddir = "../images/";
+
 if(!empty($comment))
 {
 	if($filename)
 	{
-		$uploaddir = "../images/";
+		
 		$filepath = $uploaddir.$filename;
 
 		if(file_exists($filepath))
@@ -165,7 +167,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<p class="commenttime">時刻 : <?php echo $redisdata['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $redisdata['message']?></p>
 					<?php if($redisdata['image']) { ?>
-					<img class="resize" src="../../images/<?php echo $redisdata['image']; ?>"><?php } ?>
+					<img class="resize" src="<?php echo $uploaddir.$redisdata['image']; ?>"><?php } ?>
 
 					<?php if($_SESSION['accountid'] AND ($_SESSION['Developer'] === $redisdata['lv'] OR $_SESSION['accountid'] === $redisdata['accountid'])) { ?>
 					<div class="display">
@@ -202,7 +204,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<p class="commenttime">時刻 : <?php echo $row['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $row['message']?></p>
 					<?php if($row['image']) { ?>
-					<img class="resize" src="../../images/<?php echo $row['image']; ?>"><?php }?>
+					<img class="resize" src="<?php echo $uploaddir.$row['image']; ?>"><?php }?>
 
 					<?php if($_SESSION['Developer'] === $row['lv'] OR $_SESSION['accountid'] === $row['accountid']) { ?>
 					<div class="display">
