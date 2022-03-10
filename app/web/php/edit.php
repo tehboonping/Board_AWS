@@ -37,12 +37,13 @@ $image = $_FILES['image']['name'];
 $redis = new Redis();
 $redis->connect('boardcache-001.67kw0i.0001.apne1.cache.amazonaws.com',6379);
 
+$uploaddir = "../../images/";
+
 if($image)
 {
 	$deleteimage = $mysqli->query("SELECT * FROM datas WHERE id=$id");
 	foreach($deleteimage as $row)
 	{
-		$uploaddir = "./images/";
 		$filename = $row['image'];
 		$filepath = $uploaddir.$filename;
 
@@ -52,7 +53,6 @@ if($image)
 		}
 	}
 
-	$uploaddir = "./images/";
 	$filepath = $uploaddir.$image;
 
 	if(file_exists($filepath))
@@ -89,7 +89,6 @@ else if($delete)
 	$deleteimage = $mysqli->query("SELECT * FROM datas WHERE id=$id");
 	foreach($deleteimage as $row)
 	{
-		$uploaddir = "./images/";
 		$filename = $row['image'];
 		$filepath = $uploaddir.$filename;
 		
