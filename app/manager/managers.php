@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+if($_SESSION['managerid'] || $_SESSION['name'])
+{
+	echo "アクセス拒否！IDもしくは名前が存在しません。";
+	return;
+}
+
 $host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
 $password = "password";

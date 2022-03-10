@@ -3,6 +3,12 @@ session_start();
 
 if($_SESSION['enable'])
 {
+	header('Location: ../index.php');
+	exit;
+}
+if($_SESSION['accountid'] || $_SESSION['username'])
+{
+	echo "アクセス拒否！IDもしくは名前が存在しません。";
 	return;
 }
 
