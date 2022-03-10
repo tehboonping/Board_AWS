@@ -1,4 +1,3 @@
-USER root
 FROM php:7.3.4-apache
 RUN echo "file_uploads = On\n" \
          "memory_limit = 500M\n" \
@@ -9,6 +8,7 @@ RUN echo "file_uploads = On\n" \
 RUN docker-php-ext-install mysqli
 RUN pecl install redis \
 	&& docker-php-ext-enable redis
+USER root
 COPY ./app/web /var/www/html
 VOLUME /var/www/html
 COPY ./app/images /var/www/html/images
