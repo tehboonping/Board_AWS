@@ -76,7 +76,7 @@ jobs:
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         
     - name: Fill in created image to first container task definition
-      id: task-def
+      id: render-container-web
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
@@ -84,7 +84,7 @@ jobs:
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Fill in created image to second container task definition
-      id: task-def
+      id: render-container-manager
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
