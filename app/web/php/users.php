@@ -27,7 +27,7 @@ $filename = $_FILES['image']['name'];
 date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
-$uploaddir = "../../images/";
+$uploaddir = "../images/";
 
 if(!empty($comment))
 {
