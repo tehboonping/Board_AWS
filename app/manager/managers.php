@@ -180,10 +180,10 @@ if(!$data)
 	<meta charset="UTF-8">
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<title>掲示板管理</title>
-	<link href="../css/style.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
 </head>
 <body bgcolor="black" text="white">
-	<button onclick="location.href='../index.php'" class="return">←ログイン画面に戻る</button>
+	<button onclick="location.href='index.php'" class="return">←ログイン画面に戻る</button>
 	<h1 class="title">掲示板管理</h1>
 		<div class="parent">
 			<div class="funtions"><h2>機能一覧</h2></div>

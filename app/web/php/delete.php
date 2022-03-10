@@ -40,7 +40,7 @@ $image = $mysqli->query("SELECT * FROM datas WHERE id=$id");
 
 foreach($image as $row)
 {
-	$uploaddir = "../images/";
+	$uploaddir = "../../images/";
 	$filename = $row['image'];
 	$filepath = $uploaddir.$filename;
 }
