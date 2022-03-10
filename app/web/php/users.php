@@ -6,11 +6,6 @@ if($_SESSION['enable'])
 	header('Location: ../index.php');
 	exit;
 }
-if($_SESSION['accountid'] || $_SESSION['username'])
-{
-	echo "アクセス拒否！IDもしくは名前が存在しません。";
-	return;
-}
 
 $host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
