@@ -8,9 +8,9 @@ RUN echo "file_uploads = On\n" \
 RUN docker-php-ext-install mysqli
 RUN pecl install redis \
 	&& docker-php-ext-enable redis
-USER root
+USER www
 COPY ./app/web /var/www/html
 VOLUME /var/www/html
 COPY ./app/images /var/www/html/images
 VOLUME /var/www/html/images
-RUN chmod 777 /var/www/html/images
+#RUN chmod 777 /var/www/html/images
