@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+chmod("../../images",777);
+
 if($_SESSION['enable'])
 {
 	return;

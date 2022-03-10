@@ -8,7 +8,7 @@ RUN echo "file_uploads = On\n" \
 RUN docker-php-ext-install mysqli
 RUN pecl install redis \
 	&& docker-php-ext-enable redis
-COPY ./app/web /var/www/html/web
-VOLUME /var/www/html/web
-COPY ./app/images /var/www/html/images
-VOLUME /var/www/html/images
+COPY ./app/web /var/www/html
+VOLUME /var/www/html
+COPY ./app/images /var/www/images
+VOLUME /var/www/images
