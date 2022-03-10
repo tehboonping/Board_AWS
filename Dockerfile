@@ -10,6 +10,6 @@ RUN pecl install redis \
 	&& docker-php-ext-enable redis
 COPY ./app/web /var/www/html
 VOLUME /var/www/html
-COPY ./app/images /var/www/images
-VOLUME /var/www/images
-RUN chmod 777 /var/www/images
+COPY ./app/images /var/www/html/images
+VOLUME /var/www/html/images
+RUN chmod 777 /var/www/html/images

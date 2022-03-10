@@ -31,7 +31,7 @@ if(!empty($comment))
 {
 	if($filename)
 	{
-		$uploaddir = "../../images/";
+		$uploaddir = "../images/";
 		$filepath = $uploaddir.$filename;
 
 		if(file_exists($filepath))
