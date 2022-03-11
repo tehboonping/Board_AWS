@@ -24,7 +24,7 @@ $name = $_POST["name"];
 if($accid) { $name = $_SESSION['username']; }
 $comment = $_POST["comment"];
 $filename = $_FILES['image']['name'];
-if($filename) { $content = file_get_contents($_FILES['image']['tmp_name']); echo $content; }
+if($filename) { $content = file_get_contents($_FILES['image']['tmp_name']); }
 
 date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
