@@ -11,7 +11,7 @@ RUN pecl install redis \
 COPY ./app/web /var/www/html
 COPY ./app/images /var/www/images
 RUN chmod -R 777 /var/www
-VOLUME ["/var/www/html","/var/www/images"]
+VOLUME ["/var/www"]
 
 
 FROM php:7.3.4-apache AS manager
@@ -25,4 +25,4 @@ RUN docker-php-ext-install mysqli
 COPY ./app/manager /var/www/html
 COPY ./app/images /var/www/images
 RUN chmod -R 777 /var/www
-VOLUME ["/var/www/html","/var/www/images"]
+VOLUME ["/var/www"]
