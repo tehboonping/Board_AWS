@@ -29,6 +29,7 @@ date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
 $uploaddir = "../images/";
+$managerdir = "http://35.77.47.198:85/images/"
 
 if(!empty($comment))
 {
@@ -36,6 +37,7 @@ if(!empty($comment))
 	{
 		
 		$filepath = $uploaddir.$filename;
+		$managerpath = $managerdir.$filename;
 
 		if(file_exists($filepath))
 		{
@@ -47,11 +49,13 @@ if(!empty($comment))
 			$special = hash('sha1', $hash);
 
 			$filepath = "$uploaddir$special.$file_type";
+			$managerpath = "$managerdir$special.$file_type";
 
 			$filename = "$special.$file_type";
 		}
 
 		if(!move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) { echo "アップロード失敗"; }
+		if(!move_uploaded_file($_FILES['image']['tmp_name'], $managerpath)) { echo "マネージャーアップロード失敗"; }
 	}
 
 	if($accid)

@@ -39,6 +39,7 @@ $redis = new Redis();
 $redis->connect('boardcache-001.67kw0i.0001.apne1.cache.amazonaws.com',6379);
 
 $uploaddir = "../images/";
+$managerdir = "http://35.77.47.198:85/images/"
 
 if($image)
 {
@@ -55,6 +56,7 @@ if($image)
 	}
 
 	$filepath = $uploaddir.$image;
+	$managerpath = $managerdir.$filename;
 
 	if(file_exists($filepath))
 	{
@@ -65,11 +67,13 @@ if($image)
 		$special = hash('sha1', $hash);
 
 		$filepath = "$uploaddir$special.$file_type";
+		$managerpath = "$managerdir$special.$file_type";
 
 		$image = "$special.$file_type";
 	}
 
 	if(!move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) { echo "(編集)アップロード失敗"; }
+	if(!move_uploaded_file($_FILES['image']['tmp_name'], $managerpath)) { echo "マネージャーアップロード失敗"; }
 
 	for($i = 1;$i <= $redis->dbsize(); $i++)
 	{
