@@ -63,12 +63,12 @@ if(!$data)
     	<h3>内容</h3>
     		<textarea name="message" class="textbox" required><?php echo $row['message']?></textarea><br>
 
-    		<p>画像：<?php if($row['image']) { echo $row['image']; } else { echo "無し"; } ?></p>
+    		<p>画像：<?php if($row['imgname']) { echo $row['imgname']; } else { echo "無し"; } ?></p>
     		変更する画像を選んでください：
     		<input type="file" name="image" accept="image/*"><br><br>
 		<?php endforeach;?>
     	<button class="button1" type="submit">編集 / 編集・画像変更・画像追加</button>　
-    	<?php if($row['image']) { ?>
+    	<?php if($row['imgname']) { ?>
     	<button name="delete" class="button1" type="submit" value="delete">編集・画像削除</button> 
     	<?php } ?>
 	</form>

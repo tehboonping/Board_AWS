@@ -36,20 +36,6 @@ for($i = 1;$i <= $redis->dbsize(); $i++)
 	}
 }
 
-$image = $mysqli->query("SELECT * FROM datas WHERE id=$id");
-
-foreach($image as $row)
-{
-	$uploaddir = "../images/";
-	$filename = $row['image'];
-	$filepath = $uploaddir.$filename;
-}
-
-if($filename && file_exists($filepath))
-{
-	if(!unlink($filepath)){ echo "削除失敗"; }
-}
-
 $data = $mysqli->prepare("DELETE FROM datas WHERE id = ?");
 $data->bind_param('i', $id);
 $data->execute();
