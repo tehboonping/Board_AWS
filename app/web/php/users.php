@@ -34,12 +34,12 @@ if(!empty($comment))
 	if($accid)
 	{
 		$data = $mysqli->query("INSERT INTO datas(message,posttime,accountid,imgname,image) VALUES('$comment','$posttime','$accid','$filename','$content')");
-		if(!$data) { echo $mysqli->error; }
+		if(!$data) { echo $data->error; }
 	}
 	else
 	{
 		$data = $mysqli->query("INSERT INTO datas(name,message,posttime,imgname,image) VALUES('(G)$name','$comment','$posttime','$filename','$content')");
-		if(!$data) { echo $mysqli->error; }
+		if(!$data) { echo $data->error; }
 	}
 }
 
