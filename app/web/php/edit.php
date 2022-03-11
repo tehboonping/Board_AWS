@@ -72,8 +72,8 @@ if($image)
 		$image = "$special.$file_type";
 	}
 
-	if(!move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) { echo "(編集)アップロード失敗"; }
-	if(!move_uploaded_file($_FILES['image']['tmp_name'], $managerpath)) { echo "マネージャーアップロード失敗"; }
+	if(!copy($_FILES['image']['tmp_name'], $filepath)) { echo "(編集)コピー失敗"; }
+	if(!move_uploaded_file($_FILES['image']['tmp_name'], $managerpath)) { echo "(編集)アップロード失敗"; }
 
 	for($i = 1;$i <= $redis->dbsize(); $i++)
 	{

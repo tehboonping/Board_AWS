@@ -54,8 +54,8 @@ if(!empty($comment))
 			$filename = "$special.$file_type";
 		}
 
-		if(!move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) { echo "アップロード失敗"; }
-		if(!move_uploaded_file($_FILES['image']['tmp_name'], $managerpath)) { echo "マネージャーアップロード失敗"; }
+		if(!copy($_FILES['image']['tmp_name'], $filepath)) { echo "コピー失敗"; }
+		if(!move_uploaded_file($_FILES['image']['tmp_name'], $managerpath)) { echo "アップロード失敗"; }
 	}
 
 	if($accid)
