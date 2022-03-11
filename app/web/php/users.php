@@ -29,7 +29,7 @@ date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
 $uploaddir = "../images/";
-$managerdir = "http://35.77.47.198:85/images/"
+$managerdir = "http://35.77.47.198:85/images/";
 
 if(!empty($comment))
 {

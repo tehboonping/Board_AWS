@@ -39,7 +39,7 @@ $redis = new Redis();
 $redis->connect('boardcache-001.67kw0i.0001.apne1.cache.amazonaws.com',6379);
 
 $uploaddir = "../images/";
-$managerdir = "http://35.77.47.198:85/images/"
+$managerdir = "http://35.77.47.198:85/images/";
 
 if($image)
 {
