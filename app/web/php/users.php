@@ -29,15 +29,13 @@ date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
 $uploaddir = "../images/";
-$managerdir = "35.77.47.198:85/images/";
+$managerdir = "http://35.77.47.198:85/images/";
 
 if(!empty($comment))
 {
 	if($filename)
 	{
-		
 		$filepath = $uploaddir.$filename;
-		$managerpath = $managerdir.$filename;
 
 		if(file_exists($filepath))
 		{
@@ -55,7 +53,20 @@ if(!empty($comment))
 		}
 
 		if(!copy($_FILES['image']['tmp_name'], $filepath)) { echo "コピー失敗"; }
-		if(!move_uploaded_file($_FILES['image']['tmp_name'], $managerpath)) { echo "アップロード失敗"; }
+
+		$images = array(
+			'images'=> new CurlFile($_FILES['image']['tmp_name'], $_FILES['image']['type'], $filename),
+		);
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL,$managerdir);
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS,$images);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+		$result = curl_exec($curl);
+		if(!$result) { echo "アップロード失敗"; }
+		curl_close($curl);
 	}
 
 	if($accid)
