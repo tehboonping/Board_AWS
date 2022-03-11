@@ -24,7 +24,7 @@ $name = $_POST["name"];
 if($accid) { $name = $_SESSION['username']; }
 $comment = $_POST["comment"];
 $filename = $_FILES['image']['name'];
-if($filename) { $content = file_get_contents($_FILES['image']['tmp_name']); }
+if($filename) { $content = file_get_contents($_FILES['image']['tmp_name']); echo $content; }
 
 date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
@@ -34,10 +34,12 @@ if(!empty($comment))
 	if($accid)
 	{
 		$data = $mysqli->query("INSERT INTO datas(message,posttime,accountid,imgname,image) VALUES('$comment','$posttime','$accid','$filename','$content')");
+		if(!$data) { echo $mysqli->error; }
 	}
 	else
 	{
 		$data = $mysqli->query("INSERT INTO datas(name,message,posttime,imgname,image) VALUES('(G)$name','$comment','$posttime','$filename','$content')");
+		if(!$data) { echo $mysqli->error; }
 	}
 }
 
@@ -145,8 +147,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $redisdata['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $redisdata['message']?></p>
-					<?php if($redisdata['image']) { ?>
-					<img class="resize" src="php/image.php?id=<?php echo $redisdata['id']; ?>">
+					<?php if($redisdata['imgname']) { ?>
+					<img class="resize" src="./php/image.php?id=<?php echo $redisdata['id']; ?>">
 					<?php } ?>
 
 					<?php if($_SESSION['accountid'] AND ($_SESSION['Developer'] === $redisdata['lv'] OR $_SESSION['accountid'] === $redisdata['accountid'])) { ?>
@@ -184,7 +186,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<p class="commenttime">時刻 : <?php echo $row['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $row['message']?></p>
 					<?php if($row['imgname']) { ?>
-					<img class="resize" src="php/image.php?id=<?php echo $row['id']; ?>">
+					<img class="resize" src="./php/image.php?id=<?php echo $row['id']; ?>">
 					<?php } ?>
 
 					<?php if($_SESSION['Developer'] === $row['lv'] OR $_SESSION['accountid'] === $row['accountid']) { ?>
