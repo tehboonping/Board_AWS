@@ -16,7 +16,7 @@
       },
       {
         "name": "board_manager",
-        "image": "760055059860.dkr.ecr.ap-northeast-1.amazonaws.com/board",
+        "image": "760055059860.dkr.ecr.ap-northeast-1.amazonaws.com/manager",
         "portMappings": [
           {
             "containerPort": 80,
