@@ -112,7 +112,7 @@ else if($_POST['showimages'])
 else if($_POST['imagedelete'])
 {
 	$id = $_POST['imagedelete'];
-	$deleteimage = $mysqli->query("UPDATE datas SET imgname=NULL WHERE id = '$id'");
+	$deleteimage = $mysqli->query("UPDATE datas SET image=NULL WHERE id = '$id'");
 
 	$_POST['imagedelete'] = NULL;
 	header('Location: managers.php');
