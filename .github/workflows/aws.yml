@@ -70,7 +70,7 @@ jobs:
           # be deployed to ECS.
           docker build --target web -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "::set-output name=image::$ECR_REPOSITORY:$IMAGE_TAG"
 
   Build2:
     runs-on: ubuntu-latest
@@ -99,7 +99,7 @@ jobs:
           # be deployed to ECS.
           docker build --target manager -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "::set-output name=image::$ECR_REPOSITORY:$IMAGE_TAG"
 
   deploy:
     name: Deploy
@@ -126,7 +126,7 @@ jobs:
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME_WEB }}
-        image: ${{ needs.Build1.outputs.image }}
+        image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.Build1.outputs.image }}
 
     - name: Fill in created image to second container task definition
       id: render-container-manager
@@ -134,7 +134,7 @@ jobs:
       with:
         task-definition: ${{ steps.render-container-web.outputs.task-definition }}
         container-name: ${{ env.CONTAINER_NAME_MANAGER }}
-        image: ${{ needs.Build2.outputs.image }}
+        image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.Build2.outputs.image }}
         
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
