@@ -33,7 +33,7 @@ $name = $_POST['name'];
 $message = $_POST['message'];
 $delete = $_POST['delete'];
 $image = $_FILES['image']['name'];
-$content = file_get_contents($_FILES['name']['tmp_name']);
+if($filename) { $content = file_get_contents($_FILES['image']['tmp_name']); }
 
 $redis = new Redis();
 $redis->connect('boardcache-001.67kw0i.0001.apne1.cache.amazonaws.com',6379);

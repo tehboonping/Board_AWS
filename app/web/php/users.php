@@ -24,7 +24,7 @@ $name = $_POST["name"];
 if($accid) { $name = $_SESSION['username']; }
 $comment = $_POST["comment"];
 $filename = $_FILES['image']['name'];
-$content = file_get_contents($_FILES['name']['tmp_name']);
+if($filename) { $content = file_get_contents($_FILES['image']['tmp_name']); }
 
 date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
@@ -145,11 +145,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $redisdata['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $redisdata['message']?></p>
-					<?php if($redisdata['image']) { 
-						list($file_name, $file_type) = explode(".", $redisdata['imgname']);
-						header('Content-type:image/'.$file_type);
-						echo $redisdata['image']; ?>
-					<img class="resize" src="user.php?id=<?php echo $redisdata['id']; ?>">
+					<?php if($redisdata['image']) { ?>
+					<img class="resize" src="php/image.php?id=<?php echo $redisdata['id']; ?>">
 					<?php } ?>
 
 					<?php if($_SESSION['accountid'] AND ($_SESSION['Developer'] === $redisdata['lv'] OR $_SESSION['accountid'] === $redisdata['accountid'])) { ?>
@@ -186,11 +183,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $row['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $row['message']?></p>
-					<?php if($row['imgname']) { 
-						list($file_name, $file_type) = explode(".", $row['imgname']);
-						header('Content-type:image/'.$file_type);	
-						echo $row['image']; ?>
-					<img class="resize" src="users.php?id=<?php echo $row['id']; ?>">
+					<?php if($row['imgname']) { ?>
+					<img class="resize" src="php/image.php?id=<?php echo $row['id']; ?>">
 					<?php } ?>
 
 					<?php if($_SESSION['Developer'] === $row['lv'] OR $_SESSION['accountid'] === $row['accountid']) { ?>
