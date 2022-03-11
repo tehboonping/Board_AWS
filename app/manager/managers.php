@@ -286,7 +286,7 @@ if(!$data)
 					<?php if($_SESSION['array']) {
 						foreach($_SESSION['array'] as $arr):
 							if($arr['id'] === $row['id'] && $arr['show']) { ?>
-							<img class="resize" src="../images/<?php echo $row['image']; ?>">
+							<img class="resize" src="./images/<?php echo $row['image']; ?>">
 							<?php break;
 							} 
 						endforeach; 

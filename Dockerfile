@@ -9,9 +9,9 @@ RUN docker-php-ext-install mysqli
 RUN pecl install redis \
 	&& docker-php-ext-enable redis
 COPY ./app/web /var/www/html
-COPY ./app/images /var/www/images
-RUN chmod -R 777 /var/www
-VOLUME ["/var/www/html","/var/www/images"]
+COPY ./app/images /var/www/html/images
+RUN chmod -R 777 /var/www/html
+VOLUME ["/var/www/html","/var/www/html/images"]
 
 
 FROM php:7.3.4-apache AS manager
@@ -23,5 +23,5 @@ RUN echo "file_uploads = On\n" \
          > /usr/local/etc/php/conf.d/uploads.ini
 RUN docker-php-ext-install mysqli
 COPY ./app/manager /var/www/html
-RUN chmod -R 777 /var/www
-VOLUME ["/var/www/html","/var/www/images"]
+RUN chmod -R 777 /var/www/html
+VOLUME ["/var/www/html","/var/www/html/images"]
