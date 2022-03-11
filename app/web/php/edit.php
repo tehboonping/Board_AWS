@@ -38,7 +38,7 @@ $image = $_FILES['image']['name'];
 $redis = new Redis();
 $redis->connect('boardcache-001.67kw0i.0001.apne1.cache.amazonaws.com',6379);
 
-$uploaddir = "../../images/";
+$uploaddir = "../images/";
 
 if($image)
 {
