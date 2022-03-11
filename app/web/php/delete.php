@@ -3,7 +3,8 @@ session_start();
 
 if($_SESSION['enable'])
 {
-	return;
+	header('Location: ../index.php');
+	exit;
 }
 
 $host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
@@ -34,6 +35,20 @@ for($i = 1;$i <= $redis->dbsize(); $i++)
 		$redis->del('datas'.$i);
 		break;
 	}
+}
+
+$image = $mysqli->query("SELECT * FROM datas WHERE id=$id");
+
+foreach($image as $row)
+{
+	$uploaddir = "../images/";
+	$filename = $row['image'];
+	$filepath = $uploaddir.$filename;
+}
+
+if($filename && file_exists($filepath))
+{
+	if(!unlink($filepath)){ echo "削除失敗"; }
 }
 
 $data = $mysqli->prepare("DELETE FROM datas WHERE id = ?");

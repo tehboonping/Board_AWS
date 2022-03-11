@@ -3,7 +3,8 @@ session_start();
 
 if($_SESSION['enable'])
 {
-	return;
+	header('Location: ../index.php');
+	exit;
 }
 
 $host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
@@ -33,13 +34,43 @@ $name = $_POST['name'];
 $message = $_POST['message'];
 $delete = $_POST['delete'];
 $image = $_FILES['image']['name'];
-if($filename) { $content = file_get_contents($_FILES['image']['tmp_name']); }
 
 $redis = new Redis();
 $redis->connect('boardcache-001.67kw0i.0001.apne1.cache.amazonaws.com',6379);
 
+$uploaddir = "../images/";
+
 if($image)
 {
+	$deleteimage = $mysqli->query("SELECT * FROM datas WHERE id=$id");
+	foreach($deleteimage as $row)
+	{
+		$filename = $row['image'];
+		$filepath = $uploaddir.$filename;
+
+		if($filename && file_exists($filepath))
+		{
+			if(!unlink($filepath)) { echo "削除失敗"; }
+		}
+	}
+
+	$filepath = $uploaddir.$image;
+
+	if(file_exists($filepath))
+	{
+		list($file_name, $file_type) = explode(".", $image);
+		$ran = (string)random_int(0, 99999);
+		$dateformat = date("Ymdhis");
+		$hash = $name.$dateformat.$ran;
+		$special = hash('sha1', $hash);
+
+		$filepath = "$uploaddir$special.$file_type";
+
+		$image = "$special.$file_type";
+	}
+
+	if(!move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) { echo "(編集)アップロード失敗"; }
+
 	for($i = 1;$i <= $redis->dbsize(); $i++)
 	{
 		$redisdata = $redis->hGetALL('datas'.$i);
@@ -47,16 +78,27 @@ if($image)
 		{
 			$redis->hSet('datas'.$i,'name',$name);
 			$redis->hSet('datas'.$i,'message',$message);
-			$redis->hSet('datas'.$i,'imgname',$image);
-			$redis->hSet('datas'.$i,'image',$content);
+			$redis->hSet('datas'.$i,'image',$image);
 			break;
 		}
 	}
 
-	$data = $mysqli->query("UPDATE datas SET name='$name',message='$message',imgname='$image',image='$content' WHERE id = $id");
+	$data = $mysqli->query("UPDATE datas SET name='$name',message='$message',image='$image' WHERE id = $id");
 }
 else if($delete)
 {
+	$deleteimage = $mysqli->query("SELECT * FROM datas WHERE id=$id");
+	foreach($deleteimage as $row)
+	{
+		$filename = $row['image'];
+		$filepath = $uploaddir.$filename;
+		
+		if($filename && file_exists($filepath))
+		{
+			if(!unlink($filepath)) { echo "削除失敗"; }
+		}
+	}
+
 	for($i = 1;$i <= $redis->dbsize(); $i++)
 	{
 		$redisdata = $redis->hGetALL('datas'.$i);
@@ -64,13 +106,12 @@ else if($delete)
 		{
 			$redis->hSet('datas'.$i,'name',$name);
 			$redis->hSet('datas'.$i,'message',$message);
-			$redis->hSet('datas'.$i,'imgname',NULL);
 			$redis->hSet('datas'.$i,'image',NULL);
 			break;
 		}
 	}
 
-	$data = $mysqli->query("UPDATE datas SET name='$name',message='$message',imgname=NULL,image=NULL WHERE id = $id");
+	$data = $mysqli->query("UPDATE datas SET name='$name',message='$message',image=NULL WHERE id = $id");
 }
 else
 {

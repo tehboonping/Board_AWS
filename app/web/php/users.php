@@ -24,22 +24,43 @@ $name = $_POST["name"];
 if($accid) { $name = $_SESSION['username']; }
 $comment = $_POST["comment"];
 $filename = $_FILES['image']['name'];
-if($filename) { $content = file_get_contents($_FILES['image']['tmp_name']); }
 
 date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
+$uploaddir = "../images/";
+
 if(!empty($comment))
 {
+	if($filename)
+	{
+		
+		$filepath = $uploaddir.$filename;
+
+		if(file_exists($filepath))
+		{
+			list($file_name, $file_type) = explode(".", $filename);
+
+			$ran = (string)random_int(0, 99999);
+			$dateformat = date("Ymdhis");
+			$hash = $name.$dateformat.$ran;
+			$special = hash('sha1', $hash);
+
+			$filepath = "$uploaddir$special.$file_type";
+
+			$filename = "$special.$file_type";
+		}
+
+		if(!move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) { echo "アップロード失敗"; }
+	}
+
 	if($accid)
 	{
-		$data = $mysqli->query("INSERT INTO datas(message,posttime,accountid,imgname,image) VALUES('$comment','$posttime','$accid','$filename','$content')");
-		if(!$data) { echo $data->error; }
+		$data = $mysqli->query("INSERT INTO datas(message,posttime,accountid,image) VALUES('$comment','$posttime','$accid','$filename')");
 	}
 	else
 	{
-		$data = $mysqli->query("INSERT INTO datas(name,message,posttime,imgname,image) VALUES('(G)$name','$comment','$posttime','$filename','$content')");
-		if(!$data) { echo $data->error; }
+		$data = $mysqli->query("INSERT INTO datas(name,message,posttime,image) VALUES('(G)$name','$comment','$posttime','$filename')");
 	}
 }
 
@@ -80,7 +101,6 @@ if(empty($redisdata) || $redis->dbsize() !== $rows[0])
 			'message' => $row['message'],
 			'posttime' => $row['posttime'],
 			'accountid' => $row['accountid'],
-			'imgname' => $row['imgname'],
 			'image' => $row['image']
 		);
 
@@ -147,9 +167,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $redisdata['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $redisdata['message']?></p>
-					<?php if($redisdata['imgname']) { ?>
-					<img class="resize" src="./php/image.php?id=<?php echo $redisdata['id']; ?>">
-					<?php } ?>
+					<?php if($redisdata['image']) { ?>
+					<img class="resize" src="<?php echo $uploaddir.$redisdata['image']; ?>"><?php } ?>
 
 					<?php if($_SESSION['accountid'] AND ($_SESSION['Developer'] === $redisdata['lv'] OR $_SESSION['accountid'] === $redisdata['accountid'])) { ?>
 					<div class="display">
@@ -161,7 +180,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 						<input type="hidden" name="deleteid" value="<?php echo $redisdata['id']?>">
 						<button type="submit" class="button1">削除</button>
 					</form>
-					<?php if($redisdata['imgname']) { ?>
+					<?php if($redisdata['image']) { ?>
 					<form action="imagedelete.php" method="get" class="from">
 						<button type="submit" name="imageid" class="button1" value="<?php echo $redisdata['id']?>">画像削除</button>
 					</form>
@@ -185,9 +204,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $row['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $row['message']?></p>
-					<?php if($row['imgname']) { ?>
-					<img class="resize" src="./php/image.php?id=<?php echo $row['id']; ?>">
-					<?php } ?>
+					<?php if($row['image']) { ?>
+					<img class="resize" src="<?php echo $uploaddir.$row['image']; ?>"><?php }?>
 
 					<?php if($_SESSION['Developer'] === $row['lv'] OR $_SESSION['accountid'] === $row['accountid']) { ?>
 					<div class="display">
@@ -199,7 +217,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 						<input type="hidden" name="deleteid" value="<?php echo $row['id']?>">
 						<button type="submit" class="button1">削除</button>
 					</form>
-					<?php if($row['imgname']) { ?>
+					<?php if($row['image']) { ?>
 					<form action="imagedelete.php" method="get" class="from">
 						<button type="submit" name="imageid" class="button1" value="<?php echo $row['id']?>">画像削除</button>
 					</form>

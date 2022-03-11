@@ -112,7 +112,7 @@ else if($_POST['showimages'])
 else if($_POST['imagedelete'])
 {
 	$id = $_POST['imagedelete'];
-	$deleteimage = $mysqli->query("UPDATE datas SET imgname=NULL,image=NULL WHERE id = '$id'");
+	$deleteimage = $mysqli->query("UPDATE datas SET imgname=NULL WHERE id = '$id'");
 
 	$_POST['imagedelete'] = NULL;
 	header('Location: managers.php');
@@ -244,7 +244,7 @@ if(!$data)
 							<p class="commentname">名前 : <?php echo $rows['username']; ?></p>
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $row['posttime']; ?></p>
-					<p class="commentname">画像：<?php if($row['imgname']) { echo $row['imgname']; } else { echo "無し"; } ?></p>
+					<p class="commentname">画像：<?php if($row['image']) { echo $row['image']; } else { echo "無し"; } ?></p>
 
 					<?php if($function == "edit") { ?>
 					<form action="managers.php" method="post">
@@ -269,7 +269,7 @@ if(!$data)
 				<h2 align="center"><?php if($function == "images") { echo"画像一覧"; } else { echo"画像削除"; } ?></h2>
 
 				<?php foreach($data as $row): 
-					if($row['imgname']) { ?>
+					if($row['image']) { ?>
 					<div class="comment">
 					<p class="commentname">画像ID：<?php echo $row['id']; ?></p>
 					<?php if(!$row['accountid']) {?>
@@ -282,11 +282,11 @@ if(!$data)
 							<p class="commentname">名前 : <?php echo $rows['username']; ?></p>
 					<?php } ?>
 					<p class="commenttime">時刻 : <?php echo $row['posttime']; ?></p>
-					<p class="commentname">画像：<?php echo $row['imgname']; ?></p>
+					<p class="commentname">画像：<?php echo $row['image']; ?></p>
 					<?php if($_SESSION['array']) {
 						foreach($_SESSION['array'] as $arr):
 							if($arr['id'] === $row['id'] && $arr['show']) { ?>
-							<img class="resize" src="<?php echo $row['image']; ?>">
+							<img class="resize" src="../images/<?php echo $row['image']; ?>">
 							<?php break;
 							} 
 						endforeach; 

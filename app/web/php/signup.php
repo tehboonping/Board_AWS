@@ -3,7 +3,8 @@ session_start();
 
 if($_SESSION['enable'])
 {
-	return;
+	header('Location: ../index.php');
+	exit;
 }
 
 $host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
