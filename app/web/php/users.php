@@ -147,7 +147,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<p class="info">投稿内容 : <br><?php echo $redisdata['message']?></p>
 					<?php if($redisdata['image']) { 
 						list($file_name, $file_type) = explode(".", $redisdata['imgname']);
-						header('Content-type:image/'.$file_type)	
+						header('Content-type:image/'.$file_type);
 						echo $redisdata['image']; ?>
 					<img class="resize" src="user.php?id=<?php echo $redisdata['id']; ?>">
 					<?php } ?>
@@ -188,7 +188,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<p class="info">投稿内容 : <br><?php echo $row['message']?></p>
 					<?php if($row['imgname']) { 
 						list($file_name, $file_type) = explode(".", $row['imgname']);
-						header('Content-type:image/'.$file_type)	
+						header('Content-type:image/'.$file_type);	
 						echo $row['image']; ?>
 					<img class="resize" src="users.php?id=<?php echo $row['id']; ?>">
 					<?php } ?>
