@@ -9,7 +9,7 @@ RUN docker-php-ext-install mysqli
 RUN pecl install redis \
 	&& docker-php-ext-enable redis
 COPY ./app/web /var/www/html
-#COPY ./app/images /var/www/images
+COPY ./app/images /var/www/images
 RUN chmod -R 777 /var/www
 VOLUME ["/var/www/html","/var/www/images"]
 
