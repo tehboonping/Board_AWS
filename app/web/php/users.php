@@ -47,15 +47,13 @@ if(!empty($comment))
 			$special = hash('sha1', $hash);
 
 			$filepath = "$uploaddir$special.$file_type";
-			$managerpath = "$managerdir$special.$file_type";
-
 			$filename = "$special.$file_type";
 		}
 
 		if(!copy($_FILES['image']['tmp_name'], $filepath)) { echo "コピー失敗"; }
 
 		$images = array(
-			'images'=> new CurlFile($_FILES['image']['tmp_name'], $_FILES['image']['type'], $filename),
+			'image' => '@' . $_FILES['image']['tmp_name'] . ';filename=' . $filename
 		);
 
 		$curl = curl_init();
