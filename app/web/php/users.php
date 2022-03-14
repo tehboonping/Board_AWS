@@ -6,6 +6,12 @@ require '../aws/aws-autoloader.php';
 use Aws\S3\S3Client;  
 use Aws\Exception\AwsException;
 
+$s3Client = new S3Client([
+    'version' => 'latest',
+    'region'  => 'ap-northeast-1'
+]);
+$s3Client->registerStreamWrapper();
+
 if($_SESSION['enable'])
 {
 	header('Location: ../index.php');
