@@ -8,8 +8,8 @@ RUN echo "file_uploads = On\n" \
 RUN docker-php-ext-install mysqli
 RUN pecl install redis \
 	&& docker-php-ext-enable redis
+RUN php-cli composer.phar install
 COPY ./app/web /var/www/html
-COPY ./app/composer.phar /var/www/html/
 RUN chmod -R 777 /var/www/html
 VOLUME ["/var/www/html"]
 
@@ -22,7 +22,7 @@ RUN echo "file_uploads = On\n" \
          "max_execution_time = 600\n" \
          > /usr/local/etc/php/conf.d/uploads.ini
 RUN docker-php-ext-install mysqli
+RUN php-cli composer.phar install
 COPY ./app/manager /var/www/html
-COPY ./app/composer.phar /var/www/html/
 RUN chmod -R 777 /var/www/html
 VOLUME ["/var/www/html"]
