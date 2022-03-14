@@ -52,9 +52,13 @@ foreach($image as $row)
 $uploaddir = "s3://webboarddatas/";
 $filepath = $uploaddir.$filename;
 
-$s3 = new S3Client([
-	'version'=>'latest',
-	'region'=>'ap-northeast-1',
+$s3 = Aws\S3\S3Client::factory([
+    'credentials' => [
+        'key' => 'AKIA3B5WP2WKEVEJBZ5R',
+        'secret' => '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',  
+    ],
+    'version' => 'latest',
+    'region'  => 'ap-northeast-1',
 ]);
 
 if($s3->doesObjectExist('webboarddatas',$filepath))
