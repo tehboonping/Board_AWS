@@ -30,7 +30,6 @@
     "requiresCompatibilities": [
       "EC2"
     ],
-    "executionRoleArn": "ecsTaskExecutionRole",
     "cpu": "256",
     "memory": "512"
 }
