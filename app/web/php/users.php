@@ -1,7 +1,7 @@
 <?php
 session_start();
 
- require '../aws/composer.phar';
+ require '../aws/aws-autoloader.php';
 
 use Aws\S3\S3Client;  
 use Aws\Exception\AwsException;
