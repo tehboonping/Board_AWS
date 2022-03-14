@@ -41,14 +41,27 @@ $image = $mysqli->query("SELECT * FROM datas WHERE id=$id");
 
 foreach($image as $row)
 {
-	$uploaddir = "../images/";
 	$filename = $row['image'];
-	$filepath = $uploaddir.$filename;
 }
 
-if($filename && file_exists($filepath))
+$uploaddir = "s3://webboarddatas/";
+$filepath = $uploaddir.$filename;
+
+$s3 = Aws\S3\S3Client::factory([
+	'credentials'=> [
+		'key'=>'AKIA3B5WP2WKEVEJBZ5R',
+		'secret'=>'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',
+	],
+	'version'=>'latest',
+	'region'=>'ap-northeast-1',
+]);
+
+if($s3->doesObjectExist('webboarddatas',$filepath))
 {
-	if(!unlink($filepath)){ echo "削除失敗"; }
+	$s3_delete = $s3->deleteObject([
+		'Bucket'=>'webboarddatas',
+		'key'=>$filepath,
+	]);
 }
 
 $data = $mysqli->query("UPDATE datas SET image=NULL WHERE id = $id");
