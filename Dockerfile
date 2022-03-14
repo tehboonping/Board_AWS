@@ -9,7 +9,6 @@ RUN docker-php-ext-install mysqli
 RUN pecl install redis \
 	&& docker-php-ext-enable redis
 RUN curl -s https://getcomposer.org/installer | php
-RUN mv composer.phar ~/.local/bin/composer
 RUN composer require twig/twig
 RUN composer require aws/aws-sdk-php
 COPY ./app/web /var/www/html
@@ -26,7 +25,6 @@ RUN echo "file_uploads = On\n" \
          > /usr/local/etc/php/conf.d/uploads.ini
 RUN docker-php-ext-install mysqli
 RUN curl -s https://getcomposer.org/installer | php
-RUN mv composer.phar ~/.local/bin/composer
 RUN composer require twig/twig
 RUN composer require aws/aws-sdk-php
 COPY ./app/manager /var/www/html
