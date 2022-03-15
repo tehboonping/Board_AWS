@@ -50,25 +50,24 @@ foreach($image as $row)
 }
 
 $bucket = 'webboarddatas';
-$uploaddir = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
+$uploaddir = "s3://webboarddatas/";
 $filepath = $uploaddir.$filename;
 
 $s3 = new S3Client([
 	'version' => 'latest',
     'credentials' => [
         'key' => 'AKIA3B5WP2WKEVEJBZ5R',
-        'secret' => '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',  
+        'secret' => 'eoftBaA8El1oUMenPrS+6DpMfQXHY5/eACc9k8At',
     ],
     'region'  => 'ap-northeast-1',
 ]);
 
-if(!empty($filepath))
-{
-	$s3_delete = $s3->deleteObject([
-		'Bucket'=>$bucket,
-		'key'=>$filepath,
-	]);
-}
+
+$s3_delete = $s3->deleteObject([
+	'Bucket'=>$bucket,
+	'key'=>$filename,
+]);
+
 
 $data = $mysqli->query("UPDATE datas SET image=NULL WHERE id = $id");
 

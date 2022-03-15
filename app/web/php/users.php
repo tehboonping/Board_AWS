@@ -13,6 +13,7 @@ $s3 = new S3Client([
     ],
     'region'  => 'ap-northeast-1',
 ]);
+$s3->registerStreamWrapper();
 
 if($_SESSION['enable'])
 {
@@ -43,7 +44,7 @@ date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
 $bucket = 'webboarddatas';
-$uploaddir = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
+$uploaddir = "s3://webboarddatas/";
 
 if(!empty($comment))
 {
@@ -64,13 +65,8 @@ if(!empty($comment))
 			$filename = "$special.$file_type";
 		}
 
-		$result = $s3->putObject(array(
-			'Bucket'=>$bucket,
-			'key'=>$filename,
-			'Body'=>fopen($file,'rb'),
-			'ACL'=>'public-read',
-			'ContentType'=>mime_content_type($file),
-		));
+		$imagedata = file_get_contents($_FILES['image']['tmp_name']);
+		if(!file_put_contents($filepath, $imagedata)) { echo "s3アップロード失敗"; }
 	}
 
 	if($accid)
@@ -132,6 +128,8 @@ else
 {
 	$cacheIsExist = true;
 }
+
+$objects = $s3->listObjects(array('Bucket'=>$bucket));
 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
