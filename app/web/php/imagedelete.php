@@ -4,7 +4,7 @@ session_start();
 require '../aws/aws-autoloader.php';
 
 use Aws\S3\S3Client;  
-use Aws\Exception\AwsException;
+use Aws\S3\Exception\S3Exception;
 
 if($_SESSION['enable'])
 {
@@ -55,21 +55,13 @@ $filepath = $uploaddir.$filename;
 
 $s3 = new S3Client([
 	'version' => 'latest',
-    'credentials' => [
-        'key' => 'AKIA3B5WP2WKEVEJBZ5R',
-        'secret' => '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',  
-    ],
     'region'  => 'ap-northeast-1',
 ]);
-$s3->registerStreamWrapper();
 
-if(!empty($filepath))
-{
-	$result = $s3->deleteObject([
-		'Bucket'=>$bucket,
-		'Key'=>$filename,
-	]);
-}
+$result = $s3->deleteObject([
+	'Bucket' => $bucket,
+	'Key' => $filename,
+]);
 
 $data = $mysqli->query("UPDATE datas SET image=NULL WHERE id = $id");
 
