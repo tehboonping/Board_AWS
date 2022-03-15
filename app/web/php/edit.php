@@ -9,6 +9,7 @@ $s3 = new S3Client([
 	'version' => 'latest',
     'region'  => 'ap-northeast-1',
 ]);
+$s3->registerStreamWrapper();
 
 if($_SESSION['enable'])
 {
