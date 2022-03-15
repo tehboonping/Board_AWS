@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+require '../aws/aws-autoloader.php';
+use Aws\S3\S3Client;  
+use Aws\S3\Exception\S3Exception;
+
 if($_SESSION['enable'])
 {
 	header('Location: ../index.php');
@@ -41,15 +45,20 @@ $image = $mysqli->query("SELECT * FROM datas WHERE id=$id");
 
 foreach($image as $row)
 {
-	$uploaddir = "../images/";
 	$filename = $row['image'];
-	$filepath = $uploaddir.$filename;
 }
 
-if($filename && file_exists($filepath))
-{
-	if(!unlink($filepath)){ echo "削除失敗"; }
-}
+$bucket = 'webboarddatas';
+
+$s3 = new S3Client([
+	'version' => 'latest',
+    'region'  => 'ap-northeast-1',
+]);
+
+$result = $s3->deleteObject([
+	'Bucket' => $bucket,
+	'Key' => $filename,
+]);
 
 $data = $mysqli->prepare("DELETE FROM datas WHERE id = ?");
 $data->bind_param('i', $id);

@@ -1,6 +1,20 @@
 <?php
 session_start();
 
+require '../aws/aws-autoloader.php';
+use Aws\S3\S3Client;  
+use Aws\S3\Exception\S3Exception;
+
+$s3 = new S3Client([
+	'version' => 'latest',
+    'credentials' => [
+        'key' => 'AKIA3B5WP2WKEVEJBZ5R',
+        'secret' => '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',  
+    ],
+    'region'  => 'ap-northeast-1',
+]);
+$s3->registerStreamWrapper();
+
 if($_SESSION['enable'])
 {
 	header('Location: ../index.php');
@@ -38,7 +52,8 @@ $image = $_FILES['image']['name'];
 $redis = new Redis();
 $redis->connect('boardcache-001.67kw0i.0001.apne1.cache.amazonaws.com',6379);
 
-$uploaddir = "../images/";
+$bucket = 'webboarddatas';
+$uploaddir = "s3://webboarddatas/";
 
 if($image)
 {
@@ -46,29 +61,24 @@ if($image)
 	foreach($deleteimage as $row)
 	{
 		$filename = $row['image'];
-		$filepath = $uploaddir.$filename;
-
-		if($filename && file_exists($filepath))
-		{
-			if(!unlink($filepath)) { echo "削除失敗"; }
-		}
+			
+		$result = $s3->deleteObject([
+			'Bucket' => $bucket,
+			'Key' => $filename,
+		]);	
 	}
 
-	$filepath = $uploaddir.$image;
+	list($file_name, $file_type) = explode(".", $image);
+	$ran = (string)random_int(0, 99999);
+	$dateformat = date("Ymdhis");
+	$hash = $name.$dateformat.$ran;
+	$special = hash('sha1', $hash);
 
-	if(file_exists($filepath))
-	{
-		list($file_name, $file_type) = explode(".", $image);
-		$ran = (string)random_int(0, 99999);
-		$dateformat = date("Ymdhis");
-		$hash = $name.$dateformat.$ran;
-		$special = hash('sha1', $hash);
+	$filepath = "$uploaddir$special.$file_type";
+	$image = "$special.$file_type";
 
-		$filepath = "$uploaddir$special.$file_type";
-		$image = "$special.$file_type";
-	}
-
-	if(!copy($_FILES['image']['tmp_name'], $filepath)) { echo "(編集)コピー失敗"; }
+	$imagedata = file_get_contents($_FILES['image']['tmp_name']);
+	if(!file_put_contents($filepath, $imagedata)) { echo "s3アップロード失敗"; }
 
 	for($i = 1;$i <= $redis->dbsize(); $i++)
 	{
@@ -90,12 +100,11 @@ else if($delete)
 	foreach($deleteimage as $row)
 	{
 		$filename = $row['image'];
-		$filepath = $uploaddir.$filename;
 		
-		if($filename && file_exists($filepath))
-		{
-			if(!unlink($filepath)) { echo "削除失敗"; }
-		}
+		$result = $s3->deleteObject([
+			'Bucket' => $bucket,
+			'Key' => $filename,
+		]);	
 	}
 
 	for($i = 1;$i <= $redis->dbsize(); $i++)

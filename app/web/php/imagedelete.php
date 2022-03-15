@@ -2,7 +2,6 @@
 session_start();
 
 require '../aws/aws-autoloader.php';
-
 use Aws\S3\S3Client;  
 use Aws\S3\Exception\S3Exception;
 
@@ -50,8 +49,6 @@ foreach($image as $row)
 }
 
 $bucket = 'webboarddatas';
-$uploaddir = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
-$filepath = $uploaddir.$filename;
 
 $s3 = new S3Client([
 	'version' => 'latest',

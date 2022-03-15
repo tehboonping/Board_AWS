@@ -51,21 +51,17 @@ if(!empty($comment))
 {
 	if($filename)
 	{
-		$filepath = $imagepath.$filename;
 
-		if(!empty($filepath))
-		{
-			list($file_name, $file_type) = explode(".", $filename);
+		list($file_name, $file_type) = explode(".", $filename);
 
-			$ran = (string)random_int(0, 99999);
-			$dateformat = date("Ymdhis");
-			$hash = $name.$dateformat.$ran;
-			$special = hash('sha1', $hash);
+		$ran = (string)random_int(0, 99999);
+		$dateformat = date("Ymdhis");
+		$hash = $name.$dateformat.$ran;
+		$special = hash('sha1', $hash);
 
-			$filepath = "$uploaddir$special.$file_type";
-			$filename = "$special.$file_type";
-		}
-
+		$filepath = "$uploaddir$special.$file_type";
+		$filename = "$special.$file_type";
+		
 		$imagedata = file_get_contents($_FILES['image']['tmp_name']);
 		if(!file_put_contents($filepath, $imagedata)) { echo "s3アップロード失敗"; }
 	}
