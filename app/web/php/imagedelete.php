@@ -70,8 +70,6 @@ if(!empty($filepath))
 	]);
 }
 
-
-
 $data = $mysqli->query("UPDATE datas SET image=NULL WHERE id = $id");
 
 ?>

@@ -44,7 +44,8 @@ date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
 $bucket = 'webboarddatas';
-$uploaddir = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
+$uploaddir = "s3://webboarddatas/";
+$imagepath = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
 
 if(!empty($comment))
 {
@@ -185,7 +186,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<p class="commenttime">時刻 : <?php echo $redisdata['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $redisdata['message']?></p>
 					<?php if($redisdata['image']) { ?>
-					<img class="resize" src="<?php echo $uploaddir.$redisdata['image']; ?>"><?php } ?>
+					<img class="resize" src="<?php echo $imagepath.$redisdata['image']; ?>"><?php } ?>
 
 					<?php if($_SESSION['accountid'] AND ($_SESSION['Developer'] === $redisdata['lv'] OR $_SESSION['accountid'] === $redisdata['accountid'])) { ?>
 					<div class="display">
@@ -222,7 +223,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<p class="commenttime">時刻 : <?php echo $row['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $row['message']?></p>
 					<?php if($row['image']) { ?>
-					<img class="resize" src="<?php echo $uploaddir.$row['image']; ?>"><?php }?>
+					<img class="resize" src="<?php echo $imagepath.$row['image']; ?>"><?php }?>
 
 					<?php if($_SESSION['Developer'] === $row['lv'] OR $_SESSION['accountid'] === $row['accountid']) { ?>
 					<div class="display">
