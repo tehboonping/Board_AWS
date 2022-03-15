@@ -2,8 +2,8 @@
 session_start();
 
 require '../aws/aws-autoloader.php';
-
-use Aws\S3\S3Client;  
+use Aws\S3\S3Client;
+use Aws\S3\Exception\S3Exception;
 
 $s3 = new S3Client([
 	'version' => 'latest',
@@ -47,7 +47,6 @@ if(!empty($comment))
 {
 	if($filename)
 	{
-
 		list($file_name, $file_type) = explode(".", $filename);
 
 		$ran = (string)random_int(0, 99999);
@@ -121,8 +120,6 @@ else
 {
 	$cacheIsExist = true;
 }
-
-$objects = $s3->listObjects(array('Bucket'=>$bucket));
 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
