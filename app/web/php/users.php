@@ -44,7 +44,7 @@ date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
 $bucket = 'webboarddatas';
-$uploaddir = "s3://webboarddatas/";
+$uploaddir = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
 
 if(!empty($comment))
 {
