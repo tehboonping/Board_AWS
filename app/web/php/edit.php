@@ -57,15 +57,18 @@ $uploaddir = "s3://webboarddatas/";
 
 if($image)
 {
-	$deleteimage = $mysqli->query("SELECT * FROM datas WHERE id=$id");
-	foreach($deleteimage as $row)
+	$deleteimage = $mysqli->query("SELECT * FROM datas WHERE id=$id AND image IS NOT NULL");
+	if($deleteimage) 
 	{
-		$filename = $row['image'];
+		foreach($deleteimage as $row)
+		{
+			$filename = $row['image'];
 			
-		$result = $s3->deleteObject([
-			'Bucket' => $bucket,
-			'Key' => $filename,
-		]);	
+			$result = $s3->deleteObject([
+				'Bucket' => $bucket,
+				'Key' => $filename,
+			]);	
+		}
 	}
 
 	list($file_name, $file_type) = explode(".", $image);
@@ -100,7 +103,7 @@ else if($delete)
 	foreach($deleteimage as $row)
 	{
 		$filename = $row['image'];
-		
+
 		$result = $s3->deleteObject([
 			'Bucket' => $bucket,
 			'Key' => $filename,
