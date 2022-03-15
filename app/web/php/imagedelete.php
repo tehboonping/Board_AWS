@@ -1,7 +1,7 @@
 <?php
 session_start();
 
- require '../aws/aws-autoloader.php';
+require '../aws/aws-autoloader.php';
 
 use Aws\S3\S3Client;  
 use Aws\Exception\AwsException;
@@ -57,10 +57,11 @@ $s3 = new S3Client([
 	'version' => 'latest',
     'credentials' => [
         'key' => 'AKIA3B5WP2WKEVEJBZ5R',
-        'secret' => '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',
+        'secret' => 'eoftBaA8El1oUMenPrS+6DpMfQXHY5/eACc9k8At',  
     ],
     'region'  => 'ap-northeast-1',
 ]);
+$s3->registerStreamWrapper();
 
 if(!empty($filepath))
 {
