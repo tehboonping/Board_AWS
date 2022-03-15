@@ -7,13 +7,8 @@ use Aws\S3\Exception\S3Exception;
 
 $s3 = new S3Client([
 	'version' => 'latest',
-    'credentials' => [
-        'key' => 'AKIA3B5WP2WKEVEJBZ5R',
-        'secret' => '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',  
-    ],
     'region'  => 'ap-northeast-1',
 ]);
-$s3->registerStreamWrapper();
 
 if($_SESSION['enable'])
 {
