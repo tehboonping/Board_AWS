@@ -65,7 +65,7 @@ $s3 = new S3Client([
 
 $s3_delete = $s3->deleteObject([
 	'Bucket'=>$bucket,
-	'key'=>$filename,
+	'Key'=>$filename,
 ]);
 
 
