@@ -50,7 +50,7 @@ foreach($image as $row)
 }
 
 $bucket = 'webboarddatas';
-$uploaddir = "https://s3-ap-northeast-1.amazonaws.com/".$bucket.'/';
+$uploaddir = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
 $filepath = $uploaddir.$filename;
 
 $s3 = new S3Client([
