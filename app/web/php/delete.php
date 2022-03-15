@@ -41,24 +41,27 @@ for($i = 1;$i <= $redis->dbsize(); $i++)
 	}
 }
 
-$image = $mysqli->query("SELECT * FROM datas WHERE id=$id");
+$image = $mysqli->query("SELECT * FROM datas WHERE id=$id AND image IS NOT NULL");
 
-foreach($image as $row)
+if($image)
 {
-	$filename = $row['image'];
+	foreach($image as $row)
+	{
+		$filename = $row['image'];
+	}
+
+	$bucket = 'webboarddatas';
+
+	$s3 = new S3Client([
+		'version' => 'latest',
+ 	   'region'  => 'ap-northeast-1',
+	]);
+
+	$result = $s3->deleteObject([
+		'Bucket' => $bucket,
+		'Key' => $filename,
+	]);
 }
-
-$bucket = 'webboarddatas';
-
-$s3 = new S3Client([
-	'version' => 'latest',
-    'region'  => 'ap-northeast-1',
-]);
-
-$result = $s3->deleteObject([
-	'Bucket' => $bucket,
-	'Key' => $filename,
-]);
 
 $data = $mysqli->prepare("DELETE FROM datas WHERE id = ?");
 $data->bind_param('i', $id);

@@ -1,6 +1,19 @@
 <?php
 session_start();
 
+require 'aws/aws-autoloader.php';
+use Aws\S3\S3Client;  
+use Aws\S3\Exception\S3Exception;
+
+$s3 = new S3Client([
+	'version' => 'latest',
+    'region'  => 'ap-northeast-1',
+]);
+$s3->registerStreamWrapper();
+
+$bucket = 'webboarddatas';
+$imagepath = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
+
 if(!$_SESSION['name'])
 {
 	echo "アクセス拒否！IDもしくは名前が存在しません。";
@@ -83,6 +96,21 @@ else if($_POST['editid'])
 else if($_POST['deleteid'])
 {
 	$id = $_POST['deleteid'];
+
+	$image = $mysqli->query("SELECT * FROM datas WHERE id=$id AND image IS NOT NULL");
+	if($image)
+	{
+		foreach($image as $row)
+		{
+			$filename = $row['image'];
+
+			$result = $s3->deleteObject([
+				'Bucket' => $bucket,
+				'Key' => $filename,
+			]);
+		}
+	}
+
 	$delete = $mysqli->query("DELETE FROM datas WHERE id = '$id'");
 
 	$_POST['deleteid'] = NULL;
@@ -112,6 +140,18 @@ else if($_POST['showimages'])
 else if($_POST['imagedelete'])
 {
 	$id = $_POST['imagedelete'];
+
+	$image = $mysqli->query("SELECT * FROM datas WHERE id=$id");
+	foreach($image as $row)
+	{
+		$filename = $row['image'];
+
+		$result = $s3->deleteObject([
+			'Bucket' => $bucket,
+			'Key' => $filename,
+		]);
+	}
+
 	$deleteimage = $mysqli->query("UPDATE datas SET image=NULL WHERE id = '$id'");
 
 	$_POST['imagedelete'] = NULL;
@@ -286,7 +326,7 @@ if(!$data)
 					<?php if($_SESSION['array']) {
 						foreach($_SESSION['array'] as $arr):
 							if($arr['id'] === $row['id'] && $arr['show']) { ?>
-							<img class="resize" src="images/<?php echo $row['image']; ?>">
+							<img class="resize" src="<?php echo $imagepath.$row['image']; ?>">
 							<?php break;
 							} 
 						endforeach; 

@@ -7,10 +7,6 @@ use Aws\S3\S3Client;
 
 $s3 = new S3Client([
 	'version' => 'latest',
-    'credentials' => [
-        'key' => 'AKIA3B5WP2WKEVEJBZ5R',
-        'secret' => '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',  
-    ],
     'region'  => 'ap-northeast-1',
 ]);
 $s3->registerStreamWrapper();
