@@ -49,22 +49,23 @@ foreach($image as $row)
 	$filename = $row['image'];
 }
 
-$uploaddir = "s3://webboarddatas/";
+$bucket = 'webboarddatas';
+$uploaddir = "https://s3-ap-northeast-1.amazonaws.com/".$bucket.'/';
 $filepath = $uploaddir.$filename;
 
-$s3 = Aws\S3\S3Client::factory([
+$s3 = new S3Client([
+	'version' => 'latest',
     'credentials' => [
         'key' => 'AKIA3B5WP2WKEVEJBZ5R',
         'secret' => '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',  
     ],
-    'version' => 'latest',
     'region'  => 'ap-northeast-1',
 ]);
 
-if($s3->doesObjectExist('webboarddatas',$filepath))
+if(!empty($filepath))
 {
 	$s3_delete = $s3->deleteObject([
-		'Bucket'=>'webboarddatas',
+		'Bucket'=>$bucket,
 		'key'=>$filepath,
 	]);
 }

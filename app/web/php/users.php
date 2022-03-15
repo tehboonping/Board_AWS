@@ -5,15 +5,14 @@ session_start();
 
 use Aws\S3\S3Client;  
 
-$s3 = Aws\S3\S3Client::factory([
+$s3 = new S3Client([
+	'version' => 'latest',
     'credentials' => [
         'key' => 'AKIA3B5WP2WKEVEJBZ5R',
         'secret' => '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',  
     ],
-    'version' => 'latest',
     'region'  => 'ap-northeast-1',
 ]);
-$s3->registerStreamWrapper();
 
 if($_SESSION['enable'])
 {
@@ -38,11 +37,13 @@ $name = $_POST["name"];
 if($accid) { $name = $_SESSION['username']; }
 $comment = $_POST["comment"];
 $filename = $_FILES['image']['name'];
+$file = $_FILES['image']['tmp_name'];
 
 date_default_timezone_set("Asia/Tokyo");
 $posttime = date("Y-m-d H:i:s");
 
-$uploaddir = "s3://webboarddatas/";
+$bucket = 'webboarddatas';
+$uploaddir = "https://s3-ap-northeast-1.amazonaws.com/".$bucket.'/';
 
 if(!empty($comment))
 {
@@ -63,8 +64,13 @@ if(!empty($comment))
 			$filename = "$special.$file_type";
 		}
 
-		$imagedata = file_get_contents($_FILES['image']['tmp_name']);
-		if(!file_put_contents($filepath, $imagedata)) { echo "s3アップロード失敗"; }
+		$result = $s3->putObject(array(
+			'Bucket'=>$bucket,
+			'key'=>$filename,
+			'Body'=>fopen($file,'rb'),
+			'ACL'=>'public-read',
+			'ContentType'=>mime_content_type($file),
+		));
 	}
 
 	if($accid)
@@ -180,9 +186,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $redisdata['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $redisdata['message']?></p>
-					<?php if($redisdata['image']) { 
-						$imagedata = fopen($uploaddir.$redisdata['image'],'r'); ?>
-					<img class="resize" src="<?php echo fread($imagedata,1024); ?>"><?php } ?>
+					<?php if($redisdata['image']) { ?>
+					<img class="resize" src="<?php echo $uploaddir.$redisdata['image']; ?>"><?php } ?>
 
 					<?php if($_SESSION['accountid'] AND ($_SESSION['Developer'] === $redisdata['lv'] OR $_SESSION['accountid'] === $redisdata['accountid'])) { ?>
 					<div class="display">
@@ -218,9 +223,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $row['posttime']?></p>
 					<p class="info">投稿内容 : <br><?php echo $row['message']?></p>
-					<?php if($row['image']) { 
-						$imagedata = fopen($uploaddir.$row['image'],'r'); ?>
-					<img class="resize" src="<?php echo fread($imagedata,1024); ?>"><?php }?>
+					<?php if($row['image']) { ?>
+					<img class="resize" src="<?php echo $uploaddir.$row['image']; ?>"><?php }?>
 
 					<?php if($_SESSION['Developer'] === $row['lv'] OR $_SESSION['accountid'] === $row['accountid']) { ?>
 					<div class="display">
