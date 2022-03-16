@@ -12,10 +12,20 @@ if($mysqli->connect_errno)
 	echo "DB接続失敗". $mysqli->connect_error;
 }
 
-$maintenance = $mysqli->query("SELECT * FROM maintenances WHERE starttime <= '$now' AND endtime >= '$now'");
-$mdata = mysqli_fetch_array($maintenance, MYSQLI_ASSOC);
+date_default_timezone_set("Asia/Tokyo");
+$now = date("Y-m-d H:i:s");
 
-$enable = $mdata['enable'];
+$maintenance = $mysqli->query("SELECT * FROM maintenances WHERE starttime <= '$now' AND endtime >= '$now'");
+if($maintenance)
+{ 
+	$mdata = mysqli_fetch_array($maintenance, MYSQLI_ASSOC);
+	$enable = $mdata['enable'];
+}
+else
+{
+	$enable = false;
+}
+
 $_SESSION['enable'] = $enable;
 
 if($enable)
@@ -29,9 +39,6 @@ else
 	$_SESSION['accountid'] = "";
 	$_SESSION['username'] = "";
 	$_SESSION['Developer'] = "";
-
-	date_default_timezone_set("Asia/Tokyo");
-	$now = date("Y-m-d H:i:s");
 
 	$userid = $_POST['userid'];
 	$pass = $_POST['password'];
