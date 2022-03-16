@@ -279,8 +279,8 @@ if(!$data)
 
 					<?php } else {
 							$commentcaaid = $row['accountid'];
-							$systems = $mysqli->query("SELECT * FROM systems WHERE accountid = '$commentcaaid'");
-							$rows = mysqli_fetch_array($systems, MYSQLI_ASSOC); ?>
+							$account = $mysqli->query("SELECT * FROM accounts WHERE accountid = '$commentcaaid'");
+							$rows = mysqli_fetch_array($account, MYSQLI_ASSOC); ?>
 							<p class="commentname">名前 : <?php echo $rows['username']; ?></p>
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $row['posttime']; ?></p>
@@ -317,8 +317,8 @@ if(!$data)
 
 					<?php } else {
 							$commentcaaid = $row['accountid'];
-							$systems = $mysqli->query("SELECT * FROM systems WHERE accountid = '$commentcaaid'");
-							$rows = mysqli_fetch_array($systems, MYSQLI_ASSOC); ?>
+							$account = $mysqli->query("SELECT * FROM accounts WHERE accountid = '$commentcaaid'");
+							$rows = mysqli_fetch_array($account, MYSQLI_ASSOC); ?>
 							<p class="commentname">名前 : <?php echo $rows['username']; ?></p>
 					<?php } ?>
 					<p class="commenttime">時刻 : <?php echo $row['posttime']; ?></p>
