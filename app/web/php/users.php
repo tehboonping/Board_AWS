@@ -39,7 +39,7 @@ $imagepath = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
 
 if(!empty($comment))
 {
-	if($filename)
+	if($filename <> "")
 	{
 		$s3 = new S3Client([
 			'version' => 'latest',
@@ -60,6 +60,7 @@ if(!empty($comment))
 		$imagedata = file_get_contents($_FILES['image']['tmp_name']);
 		if(!file_put_contents($filepath, $imagedata)) { echo "s3アップロード失敗"; }
 	}
+	else { $filename = NULL; }
 
 	if($accid)
 	{

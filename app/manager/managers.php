@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+if(!$_SESSION['name'])
+{
+	echo "アクセス拒否！IDもしくは名前が存在しません。";
+	return;
+}
+
 require 'aws/aws-autoloader.php';
 use Aws\S3\S3Client;  
 use Aws\S3\Exception\S3Exception;
@@ -8,17 +14,12 @@ use Aws\S3\Exception\S3Exception;
 $s3 = new S3Client([
 	'version' => 'latest',
     'region'  => 'ap-northeast-1',
+    'credentials' => false,
 ]);
 $s3->registerStreamWrapper();
 
 $bucket = 'webboarddatas';
 $imagepath = "https://webboarddatas.s3.ap-northeast-1.amazonaws.com/";
-
-if(!$_SESSION['name'])
-{
-	echo "アクセス拒否！IDもしくは名前が存在しません。";
-	return;
-}
 
 $host = "boarddata.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
@@ -104,10 +105,13 @@ else if($_POST['deleteid'])
 		{
 			$filename = $row['image'];
 
-			$result = $s3->deleteObject([
-				'Bucket' => $bucket,
-				'Key' => $filename,
-			]);
+			if($filename && $filename <> "")
+			{
+				$result = $s3->deleteObject([
+					'Bucket' => $bucket,
+					'Key' => $filename,
+				]);
+			}
 		}
 	}
 

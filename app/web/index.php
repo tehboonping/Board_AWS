@@ -53,7 +53,6 @@ else
 
 		if($redisdata && $redisdata['user'] === $userid)
 		{
-
 			if(password_verify($security, $redisdata['pass']))
 			{
 				$_SESSION['accountid'] = $redisdata['accountid'];
