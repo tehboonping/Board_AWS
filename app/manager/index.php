@@ -5,7 +5,7 @@ $_SESSION['managerid'] = "";
 $_SESSION['name'] = "";
 $_SESSION['function'] = NULL;
 
-$host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
+$host = "boarddata.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
 $password = "password";
 $database = "boarddata";

@@ -1,11 +1,7 @@
 <?php
 session_start();
 
-$_SESSION['accountid'] = "";
-$_SESSION['username'] = "";
-$_SESSION['Developer'] = "";
-
-$host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
+$host = "boarddata.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
 $password = "password";
 $database = "boarddata";
@@ -16,14 +12,12 @@ if($mysqli->connect_errno)
 	echo "DB接続失敗". $mysqli->connect_error;
 }
 
-date_default_timezone_set("Asia/Tokyo");
-$now = date("Y-m-d H:i:s");
-
 $maintenance = $mysqli->query("SELECT * FROM maintenances WHERE starttime <= '$now' AND endtime >= '$now'");
 $mdata = mysqli_fetch_array($maintenance, MYSQLI_ASSOC);
 
 $enable = $mdata['enable'];
 $_SESSION['enable'] = $enable;
+
 if($enable)
 {
 	$starttime = $mdata['starttime'];
@@ -32,6 +26,13 @@ if($enable)
 }
 else
 {
+	$_SESSION['accountid'] = "";
+	$_SESSION['username'] = "";
+	$_SESSION['Developer'] = "";
+
+	date_default_timezone_set("Asia/Tokyo");
+	$now = date("Y-m-d H:i:s");
+
 	$userid = $_POST['userid'];
 	$pass = $_POST['password'];
 	$security = $userid.$pass;
@@ -41,7 +42,7 @@ else
 
 	for($i = 1;$i <= $redis->dbsize();$i++)
 	{
-		$redisdata = $redis->hGetALL('systems'.$i);
+		$redisdata = $redis->hGetALL('accounts'.$i);
 
 		if($redisdata && $redisdata['user'] === $userid)
 		{
@@ -63,7 +64,7 @@ else
 		}
 	}
 
-	$data = $mysqli->query("SELECT * FROM systems WHERE user = '$userid'");
+	$data = $mysqli->query("SELECT * FROM accounts WHERE user = '$userid'");
 	if(!$data)
 	{
 		echo "データなし";
@@ -88,14 +89,14 @@ else
 			);
 
 			$count = 1;
-			$bool = $redis->keys('systems'.$count);
+			$bool = $redis->keys('accounts'.$count);
 			while($bool)
 			{
 				$count++;
-				$bool = $redis->keys('systems'.$count);
+				$bool = $redis->keys('accounts'.$count);
 			}
 
-			$redis->hMSet('systems'.$count, $cache);
+			$redis->hMSet('accounts'.$count, $cache);
 
 			header('Location: ./php/users.php');
 			exit;

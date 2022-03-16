@@ -7,7 +7,7 @@ if($_SESSION['enable'])
 	exit;
 }
 
-$host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
+$host = "boarddata.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
 $password = "password";
 $database = "boarddata";
@@ -24,8 +24,8 @@ $name = $_POST['accname'];
 $security = $userid.$pass;
 $passsave = password_hash($security, PASSWORD_DEFAULT);
 
-$data = $mysqli->query("SELECT * FROM systems WHERE user = '$userid'");
-$samename = $mysqli->query("SELECT * FROM systems WHERE username = '$name'");
+$data = $mysqli->query("SELECT * FROM accounts WHERE user = '$userid'");
+$samename = $mysqli->query("SELECT * FROM accounts WHERE username = '$name'");
 
 if(!$data)
 {
@@ -53,7 +53,7 @@ if($userid AND $pass And $name)
 	}
 	else
 	{
-		$db = $mysqli->query("INSERT INTO systems(user,pass,username,lv) VALUES('$userid','$passsave','$name','2')");
+		$db = $mysqli->query("INSERT INTO accounts(user,pass,username,lv) VALUES('$userid','$passsave','$name','2')");
 		$msg ='アカウント申請完了！ログイン画面に戻って、ログインして見ましょう。';
 		$color = 'green';
 

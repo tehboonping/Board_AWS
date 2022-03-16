@@ -5,19 +5,13 @@ require '../aws/aws-autoloader.php';
 use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
 
-$s3 = new S3Client([
-	'version' => 'latest',
-    'region'  => 'ap-northeast-1',
-]);
-$s3->registerStreamWrapper();
-
 if($_SESSION['enable'])
 {
 	header('Location: ../index.php');
 	exit;
 }
 
-$host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
+$host = "boarddata.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
 $password = "password";
 $database = "boarddata";
@@ -47,6 +41,12 @@ if(!empty($comment))
 {
 	if($filename)
 	{
+		$s3 = new S3Client([
+			'version' => 'latest',
+    		'region'  => 'ap-northeast-1',
+		]);
+		$s3->registerStreamWrapper();
+
 		list($file_name, $file_type) = explode(".", $filename);
 
 		$ran = (string)random_int(0, 99999);
@@ -168,8 +168,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
 					<?php } else {
 							$commentcaaid = $redisdata['accountid'];
-							$systems = $mysqli->query("SELECT * FROM systems WHERE accountid = '$commentcaaid'");
-							$rows = mysqli_fetch_array($systems, MYSQLI_ASSOC); ?>
+							$account = $mysqli->query("SELECT * FROM accounts WHERE accountid = '$commentcaaid'");
+							$rows = mysqli_fetch_array($account, MYSQLI_ASSOC); ?>
 							<p class="commentname">名前 : <?php echo $rows['username']?></p>
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $redisdata['posttime']?></p>
@@ -205,8 +205,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
 					<?php } else {
 							$commentcaaid = $row['accountid'];
-							$systems = $mysqli->query("SELECT * FROM systems WHERE accountid = '$commentcaaid'");
-							$rows = mysqli_fetch_array($systems, MYSQLI_ASSOC); ?>
+							$account = $mysqli->query("SELECT * FROM accounts WHERE accountid = '$commentcaaid'");
+							$rows = mysqli_fetch_array($account, MYSQLI_ASSOC); ?>
 							<p class="commentname">名前 : <?php echo $rows['username']?></p>
 					<?php }?>
 					<p class="commenttime">時刻 : <?php echo $row['posttime']?></p>

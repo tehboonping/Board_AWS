@@ -20,7 +20,7 @@ if(!$_SESSION['name'])
 	return;
 }
 
-$host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
+$host = "boarddata.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
 $password = "password";
 $database = "boarddata";
@@ -169,7 +169,7 @@ else if($_POST['starttime'] && $_POST['endtime'])
 
 	if(!$startdate) { $startdate = $today; }
 	if(!$enddate) { $enddate = $today; }
-	if(!$text) { $text = "申し訳ございません。只今メンテナンス中でございます。"; }
+	if(!$text) { $text = "大変申し訳ございません。只今メンテナンス中でございます。"; }
 
 	$start = $startdate." ".$starttime;
 	$end = $enddate." ".$endtime;

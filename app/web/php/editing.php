@@ -9,7 +9,7 @@ if($_SESSION['enable'])
 
 $developerid = '1';
 
-$host = "boarddatabase.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
+$host = "boarddata.cchpc7kznfed.ap-northeast-1.rds.amazonaws.com";
 $user = "root";
 $password = "password";
 $database = "boarddata";
@@ -53,8 +53,8 @@ if(!$data)
 					<input name="name" class="namebox" value="<?php echo $row['name']?>" readonly>
 				<?php } else {
 						$commentcaaid = $row['accountid'];
-						$systems = $mysqli->query("SELECT * FROM systems WHERE accountid = '$commentcaaid'");
-						$rows = mysqli_fetch_array($systems, MYSQLI_ASSOC);
+						$account = $mysqli->query("SELECT * FROM accounts WHERE accountid = '$commentcaaid'");
+						$rows = mysqli_fetch_array($account, MYSQLI_ASSOC);
 						?>
 						<input name="name" class="namebox" value="<?php echo $rows['username']?>" readonly>
 				<?php }?>
